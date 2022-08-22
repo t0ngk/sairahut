@@ -5,6 +5,7 @@ specifiers:
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
   autoprefixer: ^10.4.7
+  dotenv: ^16.0.1
   eslint: ^8.16.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
@@ -20,6 +21,7 @@ specifiers:
   vite: ^3.0.4
 
 dependencies:
+  dotenv: 16.0.1
   gsap: 3.11.0
   mongoose: 6.5.2
 
@@ -639,6 +641,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv/16.0.1:
+    resolution: {integrity: sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /electron-to-chromium/1.4.225:
     resolution: {integrity: sha512-ICHvGaCIQR3P88uK8aRtx8gmejbVJyC6bB4LEC3anzBrIzdzC7aiZHY4iFfXhN4st6I7lMO0x4sgBHf/7kBvRw==}

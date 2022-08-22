@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"dotenv": "^16.0.1",
 		"gsap": "^3.11.0",
 		"mongoose": "^6.5.2"
 	}
