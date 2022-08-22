@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"gsap": "^3.11.0"
+		"gsap": "^3.11.0",
+		"mongoose": "^6.5.2"
 	}
 }
