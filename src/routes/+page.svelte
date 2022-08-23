@@ -2,7 +2,7 @@
 	<div class="mx-2 border-l-4 border-[#101C43] w-full pl-2 text-[#101C43] py-1">
 		<div class="text-2xl font-bold py-1">ยินดีต้อนรับสู่กิจกรรม ✨</div>
 		<div
-			class="text-4xl font-black text-white break-words tracking-widest py-1"
+			class="text-4xl font-black text-transparent break-words tracking-widest py-1"
 			style="-webkit-text-stroke: 2px #101C43;"
 		>
 			SAIRAHUT2022
@@ -15,7 +15,7 @@
 >
 	<div class="absolute top-0 bg-gradient-to-b from-white h-16 w-full" />
 	<div
-		class="w-[331px] bg-[rgba(255,255,255,0.8)] backdrop-blur-lg translate-y-[35%] rounded-xl border-gray-100 border-2 shadow-lg overflow-hidden"
+		class="w-[331px] bg-[rgba(255,255,255,0.5)] backdrop-blur-sm translate-y-[35%] rounded-xl border-gray-100 border-1 shadow-lg overflow-hidden"
 	>
 		<a
 			class="bg-white w-full px-4 py-3 text-lg font-bold text-[#1C337D] flex justify-between items-center cursor-pointer transition-all hover:bg-slate-50 hover:text-[#1C337D] hover:text-xl"
