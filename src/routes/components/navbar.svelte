@@ -6,12 +6,12 @@
 	<div
 		class="w-full h-7 flex justify-between items-center border-b-2 pb-2 px-2 border-[#1B3176] text-[#111C43] text-lg"
 	>
-		<div class="font-bold flex items-center justify-start">
-			<img class="mr-1 w-4 h-4" src="/icons/pokeball.png" alt="logo" />
+		<a class="font-bold flex items-center justify-start rounded-xl transition-transform hover:translate-y-[-2px] hover:scale-105" href="/">
+			<img class="animate-spin mr-1 w-4 h-4" src="/icons/pokeball.png" alt="logo" />
 			SAIRAHUT
-		</div>
+        </a>
 		<div class="relative flex justify-start items-center">
-			<a class="w-8" href="/profile">
+			<a class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" href="/profile">
 				<svg
 					class="mx-auto {$page.url.pathname === '/profile'
 						? 'stroke-[#f20c32]'
@@ -30,7 +30,7 @@
 					/>
 				</svg>
 			</a>
-			<a class="w-8" href="/collection">
+			<a class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" href="/collection">
 				<svg
 					class="mx-auto {$page.url.pathname === '/collection'
 						? 'stroke-[#f20c32]'
