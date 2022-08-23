@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<div class="navbar w-screen h-16 px-5 flex items-end">
+<div class="navbar w-full h-16 px-5 flex items-end mb-5">
 	<div
 		class="w-full h-7 flex justify-between items-center border-b-2 pb-2 px-2 border-[#1B3176] text-[#111C43] text-lg"
 	>
