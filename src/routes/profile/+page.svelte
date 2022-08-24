@@ -20,3 +20,6 @@ import { afterNavigate, goto } from '$app/navigation';
 		hints: ['หล่อเท่สุด', 'เหล่ท่อสุด']
 	}}
 />
+<button class=" m-4 bg-red-600 rounded-sm text-white " on:click={() => {window.localStorage.removeItem('token'); goto('/')}}>
+	Logout (Dev Button)
+</button>
