@@ -1,5 +1,11 @@
 <script>
+import { afterNavigate, goto } from '$app/navigation';
 	import Pokedex from '../components/pokedex.svelte';
+	afterNavigate(() => {
+		if (!window.localStorage.getItem('token')) {
+			goto('/login');
+		}
+	});
 </script>
 
 <Pokedex

@@ -1,5 +1,19 @@
 <script>
-	import GoogleAuth from "../components/GoogleAuth.svelte";
+	import GoogleAuth from '../components/GoogleAuth.svelte';
+	import { post } from '$lib/api';
+	import { afterNavigate, goto } from '$app/navigation';
+
+	afterNavigate(() => {
+		if (window.localStorage.getItem('token')) {
+			goto('/');
+		}
+	});
+
+	let login = async (token) => {
+		let response = await post('auth', { token });
+		window.localStorage.setItem('token', response.token);
+		goto('/profile');
+	};
 </script>
 
 <div class="m-5">
@@ -7,5 +21,10 @@
 	<div class="text-lg text-[#616573]">ใช้อีเมลสถาบันในการเข้าสู่ระบบ</div>
 </div>
 <div class="h-[375px] bg-[#F3F7FA] flex justify-center items-center">
-	<GoogleAuth clientId="383424533241-9hq52ncm5o1s0sp6lgu70f28mickgnn6.apps.googleusercontent.com" on:auth-success={e => console.dir(e.detail.user)} on:init-error={e => console.log(e)} />
+	<GoogleAuth
+		clientId="383424533241-9hq52ncm5o1s0sp6lgu70f28mickgnn6.apps.googleusercontent.com"
+		on:auth-success={(e) => {
+			login(e.detail.token);
+		}}
+	/>
 </div>
