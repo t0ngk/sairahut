@@ -10,7 +10,7 @@
 	});
 
 	let login = async (token) => {
-		let response = await post('auth', { token });
+		let response = await post('/api/auth', { token });
 		window.localStorage.setItem('token', response.token);
 		goto('/profile');
 	};

@@ -1,5 +1,3 @@
-const base = 'http://localhost:5173/api';
-
 async function send({ method, path, data, token }) {
 	const opts = { method, headers: {} };
 
@@ -12,14 +10,14 @@ async function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts)
+	return fetch(`${path}`, opts)
 		.then((r) => r.text())
 		.then((json) => {
 			try {
 				var resParsed = JSON.parse(json);
 
 				if (resParsed?.status === 'error') {
-					console.log(`API response error from ${base}/${path}: ${json}`);
+					console.log(`API response error from ${path}: ${json}`);
 				}
 
 				return resParsed;
