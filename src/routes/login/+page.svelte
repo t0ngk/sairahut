@@ -26,5 +26,10 @@
 		on:auth-success={(e) => {
 			login(e.detail.token);
 		}}
+
+		on:auth-failure={(e) => {
+			alert("Error")
+			console.log(e);
+		}}
 	/>
 </div>

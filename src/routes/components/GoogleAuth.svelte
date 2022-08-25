@@ -99,7 +99,11 @@
   }
 
   function triggerPrompt () {
-    google.accounts.id.prompt()
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || !notification.isDisplayed() ){
+        alert('Error');
+      }
+    })
   }
 
   function attachHandler ({ credential }) {
