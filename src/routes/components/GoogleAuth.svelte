@@ -51,6 +51,8 @@
 </style>
 
 <script>
+import { goto } from '$app/navigation';
+
   import { createEventDispatcher } from 'svelte'
 
   export let clientId
@@ -103,7 +105,10 @@
     google.accounts.id.prompt((notification) => {
       if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
         console.log('Notification was skipped or was not displayed');
-        console.log(notification.getNotDisplayedReason());
+        if (notification.getNotDisplayedReason() === 'opt_out_or_no_session') {
+          alert("กรุณาเข้าสู่ระบบด้วยอีเมลสถาบัน แล้ว ปิดเปิดแอปใหม่อีกครั้ง 🥹")
+          goto('https://accounts.google.com/')
+        }
       }
     });
   }
