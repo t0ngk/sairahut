@@ -79,6 +79,7 @@
   function initialise () {
     google.accounts.id.initialize({
       client_id: clientId,
+      context: "signin",
       scope,
       callback: attachHandler
     })
@@ -99,7 +100,12 @@
   }
 
   function triggerPrompt () {
-    google.accounts.id.prompt();
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        console.log('Notification was skipped or was not displayed');
+        console.log(notification.getNotDisplayedReason());
+      }
+    });
   }
 
   function attachHandler ({ credential }) {
