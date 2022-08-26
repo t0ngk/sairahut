@@ -1,5 +1,6 @@
 import juniorModel from '$lib/db/junior';
 import pokedexModel from '$lib/db/pokedex';
+import Jwt from 'jsonwebtoken'
 import { error } from '@sveltejs/kit';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */

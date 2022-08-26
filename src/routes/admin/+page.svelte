@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { afterNavigate, goto } from '$app/navigation';
   import notification from '././../../stores/notification';
+	import { covertToPokemonName } from '$lib/utils'
 	let table_data = [];
 
 	afterNavigate(() => {
@@ -27,8 +28,13 @@
 	});
 
 	let savePokemon = async (data, index) => {
+		const token = await window.localStorage.getItem('token');
+		if (!token) {
+			goto('/login');
+			return;
+		}
 		const { std_id, pokemon_id } = data;
-    const newPokemon = await post(`/api/junior/${std_id}/addPokemon/`,{pokemon_id});
+    const newPokemon = await post(`/api/junior/${std_id}/addPokemon/`,{pokemon_id}, token);
     if (newPokemon == "Pokemon not found") {
       notification.pushNoti('error', 'ข้อผิดพลาดขณะบันทึกค่า', 'ไม่พบรหัสโปรเกม่อนที่กรอกมา', 2000);
       return;
@@ -77,7 +83,7 @@
 						{#if data.pokemon_name == null}
 							<td> ยังไม่มีโปรเกม่อน </td>
 						{:else}
-							<td class="">{data.pokemon_name}</td>
+							<td class="">{covertToPokemonName(data.pokemon_name)}</td>
 						{/if}
 
 						<td class="">
