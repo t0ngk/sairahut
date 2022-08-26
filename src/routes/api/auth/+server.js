@@ -13,9 +13,17 @@ export async function POST({ request, locals }) {
   const std_id = email.split('@')[0];
   let user = null;
   if (std_id.startsWith('64')) {
-    user = await seniorModel.findOne({ std_id }, { _id: 0, __v: 0 });
+    let payload = await seniorModel.findOne({ std_id });
+    user = {
+      std_id:payload.std_id,
+      std_name:payload.std_name
+    }
   } else {
-    user = await juniorModel.findOne({ std_id }, { _id: 0, __v: 0 });
+    let payload = await juniorModel.findOne({ std_id });
+    user = {
+      std_id:payload.std_id,
+      std_name:payload.std_name
+    }
   };
   if (!user) {
     throw error(400, "User not found");

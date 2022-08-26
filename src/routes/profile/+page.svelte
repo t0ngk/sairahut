@@ -29,6 +29,19 @@
 		}
 		const { user } = await get('/api/auth/profile', token);
 		if (user == undefined) { return }
+		console.log(user);
+		if (user.pokemon_id == null){
+			pokemon.name = "Pokemon Egg"
+			pokemon.image = "/images/pokemon_egg.png"
+			pokemon.element = "Unknow"
+			pokemon.lvl = 0
+			pokemon.hp.remain = 1
+			pokemon.hp.max = 1
+			pokemon.atk = 1
+			pokemon.def = 1
+			pokemon.hints = ["ไข่กำลังฟักตัวอยู่"]
+			return;
+		}
 		const userPokemon = await get(`/api/pokedex/${user.pokemon_id}`);
 		const pokemonInfo = await get(`https://pokeapi.co/api/v2/pokemon/${userPokemon.pokemon_id}`);
 		pokemon.name = userPokemon.pokemon_name;
