@@ -48,6 +48,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT.BACK</title>
+</svelte:head>
+
 <div class="px-5">
 	<div class="w-auto overflow-scroll">
 		<table class="w-full">

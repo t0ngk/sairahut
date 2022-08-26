@@ -2,6 +2,10 @@
 	import { goto } from '$app/navigation';
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT</title>
+</svelte:head>
+
 <div class="mx-5">
 	<div class="mx-2 border-l-4 border-[#101C43] w-full pl-2 text-[#101C43] py-1">
 		<div class="text-2xl font-bold py-1">ยินดีต้อนรับสู่กิจกรรม ✨</div>

@@ -61,6 +61,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT - Profile</title>
+</svelte:head>
+
 <Pokedex data={pokemon} />
 <button
 	class=" m-4 bg-red-600 rounded-sm text-white "

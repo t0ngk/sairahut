@@ -91,6 +91,10 @@
 
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT - Collection</title>
+</svelte:head>
+
 <div class="m-5">
 	<div class="text-3xl font-bold py-1 flex mb-2">
 		<span class="border-b-2 border-[#f20c32] mr-2">Pokedex collection</span>

@@ -40,4 +40,8 @@
 	});
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT - {pokemon.name}</title>
+</svelte:head>
+
 <Pokedex data={pokemon} />
