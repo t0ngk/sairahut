@@ -1,6 +1,53 @@
 <script>
+	import { gsap } from 'gsap';
+	import { onMount } from 'svelte';
 	let showHint = false;
 	export let data;
+
+	onMount(() => {
+		const tl = gsap.timeline({});
+
+		tl.from('#stat-wrapper', {
+			yPercent: 25,
+			opacity: 0,
+			ease: 'back'
+		})
+			.from(
+				'.stats',
+				{
+					opacity: 0,
+					yPercent: 30,
+					stagger: 0.1
+				},
+				'<+=0.5'
+			)
+			.from(
+				'#max-hp',
+				{
+					height: '2em',
+					duration: 1
+				},
+				'<'
+			)
+			.from(
+				'#current-hp',
+				{
+					width: 0,
+					duration: 1.5,
+					ease: 'steps(10)'
+				},
+				'<'
+			);
+
+		gsap.from('#poke-image', { // Pokemon image moving
+			xPercent: "random(-20, 20)",
+			yPercent: "random(-20, 20)",
+			repeat: -1,
+			yoyo: true,
+			ease: "sine.inOut",
+			duration: 1,
+		});
+	});
 </script>
 
 <div class="m-5">
@@ -14,36 +61,39 @@
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
 		<div class="w-[222px] h-[222px] rounded-full bg-[#F5F5F5] flex justify-center items-center">
-			<img style="w-full" src={data.image} alt="pokemon" />
+			<img id="poke-image" style="w-full" src={data.image} alt="pokemon" />
 		</div>
-		<div class="absolute bottom-0 right-0 text-[#616573]">{data.element}</div>
+		<div class="stats absolute bottom-0 right-0 text-[#616573]">{data.element}</div>
 	</div>
 </div>
-<div class="bg-[#F3F7FA] p-5 min-h-[calc(100vh-581px)]">
-	<div class="text-2xl font-bold flex justify-between items-center border-b-2 boder-[#869EAF]">
+<div id="stat-wrapper" class="bg-[#F3F7FA] p-5 min-h-[calc(100vh-581px)]">
+	<div
+		class="stats text-2xl font-bold flex justify-between items-center border-b-2 boder-[#869EAF] pb-2"
+	>
 		<span class="text-[#101C43]">{data.name}</span>
 		<span class="text-[#616573]">Lv.{data.lvl}</span>
 	</div>
 	<div class="text-[#616573] mb-7">
 		<div class="my-3">
-			<div>{data.hp.remain}/{data.hp.max}</div>
-			<div class="w-full bg-[#bebfc2] h-2 rounded-sm relative overflow-hidden">
+			<div class="stats ">{data.hp.remain}/{data.hp.max}</div>
+			<div id="max-hp" class="stats w-full bg-[#bebfc2] h-2 rounded-sm relative overflow-hidden">
 				<div
+					id="current-hp"
 					class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] h-full"
 					style="width: {(data.hp.remain / data.hp.max) * 100}%"
 				/>
 			</div>
 		</div>
-		<div class="flex justify-between items-center">
+		<div class="stats  flex justify-between items-center">
 			<div>Attack</div>
 			<div>{data.atk}</div>
 		</div>
-		<div class="flex justify-between items-center">
+		<div class="stats  flex justify-between items-center">
 			<div>Defense</div>
 			<div>{data.def}</div>
 		</div>
 	</div>
-	<div class="bg-[#ECF3F9] rounded-md p-2">
+	<div class="stats  bg-[#ECF3F9] rounded-md p-2">
 		<div
 			class="select-none cursor-pointer w-full h-9 px-2 mb-2 bg-white hover:bg-slate-50 transition-colors text-[#5592F5] border-2 border-[#5592F5] rounded-md flex justify-between items-center"
 			on:click={() => (showHint = !showHint)}
