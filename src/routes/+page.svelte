@@ -1,3 +1,7 @@
+<script>
+	import { goto } from '$app/navigation';
+</script>
+
 <div class="mx-5">
 	<div class="mx-2 border-l-4 border-[#101C43] w-full pl-2 text-[#101C43] py-1">
 		<div class="text-2xl font-bold py-1">ยินดีต้อนรับสู่กิจกรรม ✨</div>
@@ -15,11 +19,11 @@
 >
 	<div class="absolute top-0 bg-gradient-to-b from-white h-16 w-full" />
 	<div
-		class="w-[331px] bg-[rgba(255,255,255,0.5)] backdrop-blur-sm translate-y-[35%] rounded-xl border-gray-100 border-1 shadow-lg overflow-hidden"
+		class="w-[331px] bg-[rgba(255,255,255,0.5)] backdrop-blur-sm translate-y-[35%] rounded-xl border-gray-100 border-[1px] shadow-lg overflow-hidden"
 	>
-		<a
+		<div
 			class="bg-white w-full px-4 py-3 text-lg font-bold text-[#1C337D] flex justify-between items-center cursor-pointer transition-all hover:bg-slate-50 hover:text-[#1C337D] hover:text-xl"
-            href="/profile"
+			on:click={() => goto('/profile')}
 		>
 			<div class="border-b-2 border-[#f20c32]">ได้เวลาเป็นเทรนเนอร์</div>
 			<div>
@@ -38,7 +42,7 @@
 					/>
 				</svg>
 			</div>
-		</a>
+		</div>
 		<div class="p-4 text-[#1B3176]">
 			ออกตามล่าหาพี่รหัสของเรากัน กับกิจกรรม ตามหาโปเกม่อน ใครกันที่เป็นโปเกม่อนของเรา!
 		</div>
@@ -52,7 +56,7 @@
 		ทะยอยอัปขึ้นมาให้น้องๆ ได้ทำการหา ว่าใครกัน <br />
 		ที่เป็นพี่รหัส
 	</div>
-	<div class="my-4">
+	<div class="my-4 overflow-hidden">
 		<img class="animate-pulse" src="/images/question.png" alt="" />
 	</div>
 	<div>
