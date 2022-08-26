@@ -6,7 +6,7 @@
 
 	let page = 1;
 	let pokemon = [];
-	let loading = false;
+	let loading = true;
 
 	// Page
 	const allPokemon = 254;
@@ -18,8 +18,10 @@
 	const halfPagi = Math.ceil(paginationPage / 2);
 
 	onMount(async () => {
+		loading = true;
 		let loadPokemon = await get(`/api/pokedex/page/${page}`);
 		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
+		loading = false
 	});
 
 	let getPokemon = async (p) => {
