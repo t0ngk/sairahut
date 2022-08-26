@@ -6,6 +6,7 @@
 	afterNavigate(() => {
 		if (!window.localStorage.getItem('token')) {
 			goto('/login');
+			return;
 		}
 	});
 
@@ -22,15 +23,19 @@
 
 	onMount(async () => {
 		const token = await window.localStorage.getItem('token');
+		if (!token) {
+			goto('/login');
+			return;
+		}
 		const { user } = await get('/api/auth/profile', token);
-		console.log(user.pokemon_id);
+		if (user == undefined) { return }
 		const userPokemon = await get(`/api/pokedex/${user.pokemon_id}`);
 		const pokemonInfo = await get(`https://pokeapi.co/api/v2/pokemon/${userPokemon.pokemon_id}`);
 		pokemon.name = userPokemon.pokemon_name;
 		pokemon.image = pokemonInfo.sprites.other.home.front_default;
 		pokemon.lvl = Math.floor(pokemonInfo.base_experience / 10);
 		pokemon.hp.max = Math.floor(pokemonInfo.stats[0].base_stat * pokemon.lvl);
-		pokemon.hints = userPokemon.hint;
+		pokemon.hints = userPokemon.hints;
 		pokemon.hp.remain = pokemon.hp.max - ((pokemon.hp.max / 8) * pokemon.hints.length);
 		pokemon.element = pokemonInfo.types[0].type.name;
 		pokemon.atk = pokemonInfo.stats[1].base_stat + (pokemonInfo.stats[1].base_stat * 0.5 * pokemon.lvl);

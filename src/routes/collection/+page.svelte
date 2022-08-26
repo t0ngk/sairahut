@@ -2,15 +2,42 @@
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { get } from '$lib/api';
 
+	let page = 1;
+	let pokemon = [];
 
-	onMount(() => {
+	onMount(async () => {
 		gsap.from('.poke-navigators', {
 			yPercent: 10,
 			opacity: 0,
 			stagger: 0.05
 		});
+		let loadPokemon = await get(`/api/pokedex/page/${page}`);
+		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
 	});
+
+	let loadMorePokemon = async () => {
+		page++;
+		let loadPokemon = await get(`/api/pokedex/page/${page}`);
+		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
+	};
+
+	let fetchPokemons = async (pokemons) => {
+		let result = [];
+		for (let index = 0; index < pokemons.length; index++) {
+			const pokemon = pokemons[index];
+			let pokemonData = await get(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_id}`);
+			if (pokemonData.sprites.other.home.front_default == null) {
+				console.log(`Pokemon ID ${pokemon.pokemon_id}'s' img not found`);
+			}
+			result.push({
+				id: pokemon.pokemon_id,
+				image: pokemonData.sprites.other.home.front_default
+			});
+		}
+		return result;
+	};
 
 	const navigate = (pokeNth) => {
 		const tl = gsap.timeline({});
@@ -66,21 +93,18 @@
 	/>
 
 	<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5">
-		{#each Array(14) as _, i}
+		{#each pokemon as pokemonInfo}
 			<div
-				on:click={() => navigate(i)}
-				class={`poke-navigators poke-navigator-${i} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
+				on:click={() => navigate(pokemonInfo.id)}
+				class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
 			>
 				<div
 					class="w-1/2 h-1/2 bg-[#E5EEF4] rounded-full relative flex justify-center items-center"
 				>
-					<img
-						class="w-full"
-						src="https://th.portal-pokemon.com/play/resources/pokedex/img/pm/5794f0251b1180998d72d1f8568239620ff5279c.png"
-						alt="pokemon"
-					/>
+					<img class="w-full" src={pokemonInfo.image} alt="pokemon" />
 				</div>
 			</div>
 		{/each}
 	</div>
+	<button on:click={() => {loadMorePokemon()}}>Loadmore</button>
 </div>

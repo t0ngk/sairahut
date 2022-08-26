@@ -15,7 +15,6 @@ async function send({ method, path, data, token }) {
 		.then((json) => {
 			try {
 				var resParsed = JSON.parse(json);
-
 				if (resParsed?.status === 'error') {
 					console.log(`API response error from ${path}: ${json}`);
 				}

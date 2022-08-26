@@ -11,6 +11,11 @@
 
 	let login = async (token) => {
 		let response = await post('/api/auth', { token });
+		if (response == 'Please use @kmitl.ac.th') {
+			alert('กรุณาเข้าสู่ระบบด้วยอีเมลสถาบัน แล้ว ปิดเปิดแอปใหม่อีกครั้ง 🥹');
+			goto('https://accounts.google.com/');
+			return;
+		}
 		window.localStorage.setItem('token', response.token);
 		goto('/profile');
 	};
