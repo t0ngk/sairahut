@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from '$lib/api';
+	import { fly } from 'svelte/transition';
 
 	let page = 1;
 	let pokemon = [];
@@ -102,9 +103,14 @@
 	/>
 
 	{#if !loading}
-		<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5">
-			{#each pokemon as pokemonInfo}
+		<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 overflow-hidden">
+			{#each pokemon as pokemonInfo, index}
 				<div
+					in:fly={{
+						y: '100',
+						delay: 100 * index,
+						opacity: 0,
+					}}
 					on:click={() => navigate(pokemonInfo.id)}
 					class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
 				>

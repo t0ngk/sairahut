@@ -12,7 +12,8 @@
 
 	let pokemon = {
 		name: 'ditto',
-		image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/132.png',
+		image:
+			'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/132.png',
 		element: 'normal',
 		lvl: 1,
 		hp: { remain: 64, max: 64 },
@@ -28,17 +29,19 @@
 			return;
 		}
 		const { user } = await get('/api/auth/profile', token);
-		if (user == undefined) { return }
-		if (user.pokemon_id == null){
-			pokemon.name = "Pokemon Egg"
-			pokemon.image = "/images/pokemon_egg.png"
-			pokemon.element = "Unknow"
-			pokemon.lvl = 0
-			pokemon.hp.remain = 1
-			pokemon.hp.max = 1
-			pokemon.atk = 1
-			pokemon.def = 1
-			pokemon.hints = ["ไข่กำลังฟักตัวอยู่"]
+		if (user == undefined) {
+			return;
+		}
+		if (user.pokemon_id == null) {
+			pokemon.name = 'Pokemon Egg';
+			pokemon.image = '/images/pokemon_egg.png';
+			pokemon.element = 'Unknow';
+			pokemon.lvl = 0;
+			pokemon.hp.remain = 1;
+			pokemon.hp.max = 1;
+			pokemon.atk = 1;
+			pokemon.def = 1;
+			pokemon.hints = ['ไข่กำลังฟักตัวอยู่'];
 			return;
 		}
 		const userPokemon = await get(`/api/pokedex/${user.pokemon_id}`);
@@ -48,16 +51,16 @@
 		pokemon.lvl = Math.floor(pokemonInfo.base_experience / 10);
 		pokemon.hp.max = Math.floor(pokemonInfo.stats[0].base_stat * pokemon.lvl);
 		pokemon.hints = userPokemon.hints;
-		pokemon.hp.remain = pokemon.hp.max - ((pokemon.hp.max / 8) * pokemon.hints.length);
+		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
 		pokemon.element = pokemonInfo.types[0].type.name;
-		pokemon.atk = pokemonInfo.stats[1].base_stat + (pokemonInfo.stats[1].base_stat * 0.5 * pokemon.lvl);
-		pokemon.def = pokemonInfo.stats[2].base_stat + (pokemonInfo.stats[2].base_stat * 0.5 * pokemon.lvl);
+		pokemon.atk =
+			pokemonInfo.stats[1].base_stat + pokemonInfo.stats[1].base_stat * 0.5 * pokemon.lvl;
+		pokemon.def =
+			pokemonInfo.stats[2].base_stat + pokemonInfo.stats[2].base_stat * 0.5 * pokemon.lvl;
 	});
 </script>
 
-<Pokedex
-	data={pokemon}
-/>
+<Pokedex data={pokemon} />
 <button
 	class=" m-4 bg-red-600 rounded-sm text-white "
 	on:click={() => {
@@ -67,3 +70,10 @@
 >
 	Logout (Dev Button)
 </button>
+
+<button
+	on:click={() => {
+		pokemon.hints.push('A');
+		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
+	}}>Add Hints</button
+>
