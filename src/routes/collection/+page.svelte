@@ -38,9 +38,6 @@
 		for (let index = 0; index < pokemons.length; index++) {
 			const pokemon = pokemons[index]; // เข้าถึงข้อมูลโปเกม่อนแต่ละตัวที่ Fetch
 			let pokemonData = await get(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_id}`); // ทำการดึงข้อมูลจาก ID นั้นๆ ต่อ
-			if (pokemonData.sprites.other.home.front_default == null) {
-				console.log(`Pokemon ID ${pokemon.pokemon_id}'s' img not found`);
-			}
 			result.push({
 				id: pokemon.pokemon_id,
 				image: pokemonData.sprites.other.home.front_default

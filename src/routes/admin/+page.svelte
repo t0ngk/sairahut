@@ -1,15 +1,23 @@
 <script>
-	import { get } from '$lib/api';
+	import { get, post } from '$lib/api';
 	import { onMount } from 'svelte';
+  import notification from '././../../stores/notification';
 	let table_data = [];
 
 	onMount(async () => {
-	  table_data = await get('/api/junior')
+		table_data = await get('/api/junior');
 	});
 
-  let savePokemon = async () => {
-    
-  }
+	let savePokemon = async (data, index) => {
+		const { std_id, pokemon_id } = data;
+    const newPokemon = await post(`/api/junior/${std_id}/addPokemon/`,{pokemon_id});
+    if (newPokemon == "Pokemon not found") {
+      notification.pushNoti('error', 'ข้อผิดพลาดขณะบันทึกค่า', 'ไม่พบรหัสโปรเกม่อนที่กรอกมา', 2000);
+      return;
+    }
+    table_data[index] = newPokemon;
+		notification.pushNoti('success', 'ระบบ', 'บันทึกสำเร็จ', 2000);
+	};
 </script>
 
 <div class="px-5">
@@ -26,11 +34,11 @@
 				</tr>
 			</thead>
 			<tbody>
-        {#if table_data.length == 0}
-        <tr class="text-center border-collapse border-b-2 border-red-500 h-[50px]">
-          <td colspan="6">ไม่มีข้อมูล</td>
-        </tr>
-        {/if}
+				{#if table_data.length == 0}
+					<tr class="text-center border-collapse border-b-2 border-red-500 h-[50px]">
+						<td colspan="6">ไม่มีข้อมูล</td>
+					</tr>
+				{/if}
 				{#each table_data as data, index}
 					<tr class="text-center border-collapse border-b-2 border-red-500 h-[50px]">
 						<td class="">{index + 1}</td>
@@ -53,7 +61,7 @@
 						<td class="">
 							<button
 								class=" bg-blue-500 rounded hover:bg-blue-800 px-5 text-white transition"
-								on:click={console.log(data)}>Save</button
+								on:click={savePokemon(data, index)}>Save</button
 							>
 						</td>
 					</tr>
