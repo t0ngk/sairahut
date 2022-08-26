@@ -1,10 +1,18 @@
 <script>
 	import { page } from '$app/stores';
+	let y;
+
+	// const showY = () => {
+	// 	console.log(y)
+	// }
+	
+	// $: y , showY()
 </script>
 
-<div class="navbar w-full h-16 px-5 flex items-end mb-5">
+<svelte:window bind:scrollY={y} />
+<div class={`${y > 30 ? "pt-4" : "pt-8"} bg-white w-full px-5 flex items-end mb-5 sticky top-0 left-0 z-20 transition-all duration-200 ease-out`}>
 	<div
-		class="w-full h-7 flex justify-between items-center border-b-2 pb-2 px-2 border-[#1B3176] text-[#111C43] text-lg"
+		class={` ${y > 30 ? "pb-3" : "pb-6"} w-full flex justify-between items-center border-b-2 px-2 border-[#1B3176] text-[#111C43] text-lg`}
 	>
 		<a class="font-bold flex items-center justify-start rounded-xl transition-transform hover:translate-y-[-2px] hover:scale-105" href="/">
 			<img class="animate-spin mr-1 w-4 h-4" src="/icons/pokeball.png" alt="logo" />

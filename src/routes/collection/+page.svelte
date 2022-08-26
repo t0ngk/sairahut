@@ -1,5 +1,5 @@
 <script>
-	import { gsap } from 'gsap';
+	import { gsap  } from 'gsap';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from '$lib/api';
@@ -18,11 +18,6 @@
 	const halfPagi = Math.ceil(paginationPage / 2);
 
 	onMount(async () => {
-		gsap.from('.poke-navigators', {
-			yPercent: 10,
-			opacity: 0,
-			stagger: 0.05
-		});
 		let loadPokemon = await get(`/api/pokedex/page/${page}`);
 		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
 	});
@@ -35,11 +30,12 @@
 		loading = false;
 	};
 
-	let fetchPokemons = async (pokemons) => {
+	let fetchPokemons = async (pokemons) => { // ⚡️ Fetch pokemon มาจาก website official
+
 		let result = [];
 		for (let index = 0; index < pokemons.length; index++) {
-			const pokemon = pokemons[index];
-			let pokemonData = await get(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_id}`);
+			const pokemon = pokemons[index]; // เข้าถึงข้อมูลโปเกม่อนแต่ละตัวที่ Fetch
+			let pokemonData = await get(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_id}`); // ทำการดึงข้อมูลจาก ID นั้นๆ ต่อ
 			if (pokemonData.sprites.other.home.front_default == null) {
 				console.log(`Pokemon ID ${pokemon.pokemon_id}'s' img not found`);
 			}
@@ -91,6 +87,8 @@
 				opacity: 0.5
 			});
 	};
+
+
 </script>
 
 <div class="m-5">

@@ -29,7 +29,6 @@
 		}
 		const { user } = await get('/api/auth/profile', token);
 		if (user == undefined) { return }
-		console.log(user);
 		if (user.pokemon_id == null){
 			pokemon.name = "Pokemon Egg"
 			pokemon.image = "/images/pokemon_egg.png"
