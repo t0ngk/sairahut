@@ -34,7 +34,7 @@
 		<div
 			class="w-full pointer-events-auto bg-[rgba(221,221,221,0.3)] backdrop-blur-sm rounded-lg p-3 overflow-hidden {show
 				? ''
-				: 'translate-y-[calc(-145%)] shadow-xl'} transition-transform"
+				: 'translate-y-[calc(-150%)] shadow-xl'} transition-transform"
 		>
 			{#if noti.length > 0}
 				<div class="text-sm flex justify-start items-center" style="color: {color[noti[0].type]};">
