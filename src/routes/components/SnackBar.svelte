@@ -32,9 +32,9 @@
 <div class="fixed w-full z-10 top-0 h-fit pointer-events-none">
 	<div class="w-full max-w-[824px] h-full p-3 mx-auto">
 		<div
-			class="w-full pointer-events-auto bg-[rgba(221,221,221,0.3)] backdrop-blur-sm shadow-xl rounded-lg p-3 overflow-hidden {show
+			class="w-full pointer-events-auto bg-[rgba(221,221,221,0.3)] backdrop-blur-sm rounded-lg p-3 overflow-hidden {show
 				? ''
-				: 'translate-y-[calc(-120%)]'} transition-transform"
+				: 'translate-y-[calc(-145%)] shadow-xl'} transition-transform"
 		>
 			{#if noti.length > 0}
 				<div class="text-sm flex justify-start items-center" style="color: {color[noti[0].type]};">
