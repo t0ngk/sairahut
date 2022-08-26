@@ -2,7 +2,7 @@
 	import GoogleAuth from '../components/GoogleAuth.svelte';
 	import { post } from '$lib/api';
 	import { afterNavigate, goto } from '$app/navigation';
-
+	import notification from '../../stores/notification';
 	afterNavigate(() => {
 		if (window.localStorage.getItem('token')) {
 			goto('/');
@@ -12,8 +12,15 @@
 	let login = async (token) => {
 		let response = await post('/api/auth', { token });
 		if (response == 'Please use @kmitl.ac.th') {
-			alert('กรุณาเข้าสู่ระบบด้วยอีเมลสถาบัน แล้ว ปิดเปิดแอปใหม่อีกครั้ง 🥹');
-			goto('https://accounts.google.com/');
+			notification.pushNoti(
+				'warning',
+				'เข้าสู่ระบบล้มเหลว',
+				'กรุณาเข้าสู่ระบบด้วยอีเมลสถาบัน แล้ว ปิดเปิดแอปใหม่อีกครั้ง 🥹',
+				4000
+			);
+			setTimeout(() => {
+				goto('https://accounts.google.com/AddSession?hl=en&continue=https://www.google.com');
+			}, 4000);
 			return;
 		}
 		window.localStorage.setItem('token', response.token);
@@ -31,9 +38,13 @@
 		on:auth-success={(e) => {
 			login(e.detail.token);
 		}}
-
 		on:auth-failure={(e) => {
-			alert("Error")
+			notification.pushNoti(
+				'error',
+				'Error',
+				'Something went wrong. please contact administrator',
+				4000
+			);
 			console.log(e);
 		}}
 	/>
