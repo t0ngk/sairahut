@@ -1,11 +1,29 @@
 <script>
 	import { get, post } from '$lib/api';
 	import { onMount } from 'svelte';
+	import { afterNavigate, goto } from '$app/navigation';
   import notification from '././../../stores/notification';
 	let table_data = [];
 
+	afterNavigate(() => {
+		if (!window.localStorage.getItem('token')) {
+			goto('/login');
+			return;
+		}
+	});
+
 	onMount(async () => {
 		table_data = await get('/api/junior');
+		const token = await window.localStorage.getItem('token');
+		if (!token) {
+			goto('/login');
+			return;
+		}
+		const { user } = await get('/api/auth/profile', token);
+		if (user.std_id.startsWith('65')) {
+			goto('/');
+		}
+		if (user == undefined) { return }
 	});
 
 	let savePokemon = async (data, index) => {
@@ -15,6 +33,10 @@
       notification.pushNoti('error', 'ข้อผิดพลาดขณะบันทึกค่า', 'ไม่พบรหัสโปรเกม่อนที่กรอกมา', 2000);
       return;
     }
+		if (newPokemon == "Missing Permission") {
+			notification.pushNoti('warning', 'ระบบ', 'นี่ไม่ใช่ที่ของเรานะเด็กๆ', 2000);
+      return;
+		}
     table_data[index] = newPokemon;
 		notification.pushNoti('success', 'ระบบ', 'บันทึกสำเร็จ', 2000);
 	};
