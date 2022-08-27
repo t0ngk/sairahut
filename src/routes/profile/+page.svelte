@@ -78,7 +78,7 @@
 
 <button
 	on:click={() => {
-		pokemon.hints.push('A');
+		pokemon.hints.push(new Date().toLocaleString());
 		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
 	}}>Add Hints</button
 >

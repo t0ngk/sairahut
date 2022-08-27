@@ -3,9 +3,9 @@
 	import { onMount } from 'svelte';
 	let showHint = false;
 	export let data;
-	import { circOut } from 'svelte/easing'
+	import { circOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
-
+	import notiHint from '../../stores/notiHint';
 	const progress = tweened(0, {
 		delay: 1000,
 		duration: 2250,
@@ -13,7 +13,7 @@
 	});
 
 	$: {
-		progress.set((data.hp.remain / data.hp.max));
+		progress.set(data.hp.remain / data.hp.max);
 	}
 
 	onMount(() => {
@@ -51,17 +51,17 @@
 				'<'
 			);
 
-		gsap.from('#poke-image', { // Pokemon image moving
-			xPercent: "random(-20, 20)",
-			yPercent: "random(-20, 20)",
+		gsap.from('#poke-image', {
+			// Pokemon image moving
+			xPercent: 'random(-20, 20)',
+			yPercent: 'random(-20, 20)',
 			repeat: -1,
 			yoyo: true,
-			ease: "sine.inOut",
-			duration: 1,
+			ease: 'sine.inOut',
+			duration: 1
 		});
 	});
 </script>
-
 
 <div class="m-5">
 	<div class="text-3xl font-bold py-1 flex mb-2">
@@ -95,7 +95,10 @@
 					class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] h-full"
 					style="width: {(data.hp.remain / data.hp.max) * 100}%"
 				/> -->
-				<progress value={$progress} class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] w-full absolute top-0" ></progress>
+				<progress
+					value={$progress}
+					class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] w-full absolute top-0"
+				/>
 			</div>
 		</div>
 		<div class="stats  flex justify-between items-center">
@@ -108,9 +111,24 @@
 		</div>
 	</div>
 	<div class="stats  bg-[#ECF3F9] rounded-md p-2">
+		{#if notiHint.newHint($notiHint, data.hints).length > 0 && !showHint}
+			<div class="absolute right-[3px] top-[3px]">
+				<span class="flex h-3 w-3">
+					<span
+						class="relative inline-flex rounded-full h-3 w-3 bg-red-600 border-[2px] border-[#ECF3F9]"
+					/>
+					<span
+						class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"
+					/>
+				</span>
+			</div>
+		{/if}
 		<div
 			class="select-none cursor-pointer w-full h-9 px-2 mb-2 bg-white hover:bg-slate-50 transition-colors text-[#5592F5] border-2 border-[#5592F5] rounded-md flex justify-between items-center"
-			on:click={() => (showHint = !showHint)}
+			on:click={() => {
+				showHint = !showHint;
+				notiHint.reWrite(data.hints);
+			}}
 		>
 			<span>คำใบ้</span>
 			<span class="transition-transform {showHint ? 'rotate-180' : ''}">
