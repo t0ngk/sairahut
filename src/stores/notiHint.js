@@ -10,13 +10,16 @@ oldHints.reWrite = (newData) => {
 	console.log(newData);
 };
 
-oldHints.newHint = (data, checkData) => {
-	const newData = [...data];
-	const newCheckData = [...checkData];
-	const diffData = newData
-		.filter((x) => !newCheckData.includes(x))
-		.concat(newCheckData.filter((x) => !newData.includes(x)));
-	return diffData;
+oldHints.newHint = (data = [], checkData = []) => {
+	if (data !== null && checkData !== null) {
+		const newData = [...data];
+		const newCheckData = [...checkData];
+		const diffData = newData
+			.filter((x) => !newCheckData.includes(x))
+			.concat(newCheckData.filter((x) => !newData.includes(x)));
+		return diffData;
+	}
+	return [];
 };
 
 export default oldHints;
