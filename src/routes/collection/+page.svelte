@@ -1,10 +1,13 @@
 <script>
-	import { gsap  } from 'gsap';
+	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from '$lib/api';
+	import { page } from '$app/stores';
 
-	let pages = 1;
+	const query = $page.url.searchParams.get('page');
+
+	let pages = query === null ? 1 : Number(query);
 	let pokemon = [];
 	let loading = true;
 
@@ -18,10 +21,13 @@
 	const halfPagi = Math.ceil(paginationPage / 2);
 
 	onMount(async () => {
+		if (query == null || Number(query) < 1 || Number(query) > allPages) {
+			window.location.href = '/collection?page=1';
+		}
 		loading = true;
 		let loadPokemon = await get(`/api/pokedex/page/${pages}`);
 		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
-		loading = false
+		loading = false;
 	});
 
 	let getPokemon = async (p) => {
@@ -32,7 +38,8 @@
 		loading = false;
 	};
 
-	let fetchPokemons = async (pokemons) => { // ⚡️ Fetch pokemon มาจาก website official
+	let fetchPokemons = async (pokemons) => {
+		// ⚡️ Fetch pokemon มาจาก website official
 
 		let result = [];
 		for (let index = 0; index < pokemons.length; index++) {
@@ -89,8 +96,6 @@
 				opacity: 0.5
 			});
 	};
-
-
 </script>
 
 <div class="m-5">
@@ -133,7 +138,10 @@
 		<button
 			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
 			{pages <= 1 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
-			on:click={() => getPokemon(pages - 1)}
+			on:click={() => {
+				goto('/collection?page=' + (pages - 1));
+				getPokemon(pages - 1);
+			}}
 			disabled={pages <= 1}
 		>
 			<svg
@@ -154,9 +162,15 @@
 				{(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) === pages
 					? 'bg-[#a8a8a881] border-[#cb66147e]'
 					: 'bg-[#ea8d40] border-[#CB6714]'}"
-				on:click={() =>
-					getPokemon(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1)}
-				disabled={(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) === pages}
+				on:click={() => {
+					goto(
+						'/collection?page=' +
+							(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1)
+					);
+					getPokemon(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1);
+				}}
+				disabled={(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) ===
+					pages}
 			>
 				{pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1}
 			</button>
@@ -164,7 +178,10 @@
 		<button
 			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
 			{pages >= 22 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
-			on:click={() => getPokemon(pages + 1)}
+			on:click={() => {
+				goto('/collection?page=' + (pages + 1));
+				getPokemon(pages + 1);
+			}}
 			disabled={pages >= allPages}
 		>
 			<svg

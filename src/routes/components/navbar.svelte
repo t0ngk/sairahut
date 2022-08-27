@@ -5,7 +5,7 @@
 	// const showY = () => {
 	// 	console.log(y)
 	// }
-	
+
 	// $: y , showY()
 </script>
 
