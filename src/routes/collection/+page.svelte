@@ -7,16 +7,16 @@
 	import { page } from '$app/stores';
 	import allPoke from '../../stores/pokemon';
 
-	const query = $page.url.searchParams.get('page');
+	const query = $page.url.searchParams.get('page'); // ดึงค่า url param
 
 	let pages = query === null ? 1 : Number(query);
 	let pokemon = [];
 	let loading = true;
 
 	// Page
-	const allPokemon = 254;
-	const limit = 12;
-	const allPages = Math.ceil(allPokemon / limit);
+	const allPokemon = 254; // จำนวนโปเม่อนทั้งหมดที่มี เพื่อ หาว่าต้องใช้กี่หน้า
+	const limit = 12; //จำนวนโปเกม่อนต่อหนึ่งห้นา
+	const allPages = Math.ceil(allPokemon / limit); // ปัดขึ้นจำนวนหน้า
 
 	// Pagination (Not flexible work well with 5)
 	const paginationPage = 5;
@@ -25,7 +25,7 @@
 	onMount(async () => {
 		if (query == null || Number(query) < 1 || Number(query) > allPages) {
 			window.location.href = '/collection?page=1';
-		}
+		} // เช็คว่าเรียกหน้าในจำนวนที่กำหนด
 		loading = true;
 		let loadPokemon = await get(`/api/pokedex/page/${pages}`);
 		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
@@ -38,6 +38,7 @@
 		if (!(p in $allPoke)) {
 			let loadPokemon = await get(`/api/pokedex/page/${p}`);
 			pokemon = await fetchPokemons(loadPokemon);
+			console.log(loadPokemon.map(poke => poke.pokemon_name));
 			allPoke.newPokemon(p, pokemon);
 		} else {
 			pokemon = $allPoke[p];
