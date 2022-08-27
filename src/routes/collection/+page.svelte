@@ -129,7 +129,7 @@
 						opacity: 0
 					}}
 					on:click={() => navigate(pokemonInfo.id)}
-					class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
+					class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative transition-transform hover:scale-95`}
 				>
 					<div
 						class="w-1/2 h-1/2 bg-[#E5EEF4] rounded-full relative flex justify-center items-center"
