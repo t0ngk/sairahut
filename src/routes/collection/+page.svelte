@@ -118,7 +118,7 @@
 					in:fly={{
 						y: '100',
 						delay: 100 * index,
-						opacity: 0,
+						opacity: 0
 					}}
 					on:click={() => navigate(pokemonInfo.id)}
 					class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
@@ -143,8 +143,10 @@
 	<!-- Pagination -->
 	<div class="text-center mt-3 flex justify-center items-center gap-1">
 		<button
-			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
-			{pages <= 1 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
+			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center  transition-transform
+			{pages <= 1
+				? 'bg-[#e4781f8a] border-[#cb661486]'
+				: 'bg-[#ea8d40] border-[#CB6714] hover:bg-[#e4781fde] hover:translate-y-[-2px]'}"
 			on:click={() => {
 				goto('/collection?page=' + (pages - 1));
 				getPokemon(pages - 1);
@@ -165,10 +167,10 @@
 		</button>
 		{#each Array(paginationPage) as _, i}
 			<button
-				class="w-9 h-9 border-1 rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#ea8d40f3] transition-transform
+				class="w-9 h-9 border-1 rounded-md text-white flex justify-center items-center transition-transform
 				{(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) === pages
 					? 'bg-[#a8a8a881] border-[#cb66147e]'
-					: 'bg-[#ea8d40] border-[#CB6714]'}"
+					: 'bg-[#ea8d40] border-[#CB6714] hover:translate-y-[-2px] hover:bg-[#ea8d40f3]'}"
 				on:click={() => {
 					goto(
 						'/collection?page=' +
@@ -183,8 +185,10 @@
 			</button>
 		{/each}
 		<button
-			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
-			{pages >= 22 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
+			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center transition-transform
+			{pages >= 22
+				? 'bg-[#e4781f8a] border-[#cb661486]'
+				: 'bg-[#ea8d40] border-[#CB6714] hover:translate-y-[-2px] hover:bg-[#e4781fde]'}"
 			on:click={() => {
 				goto('/collection?page=' + (pages + 1));
 				getPokemon(pages + 1);
