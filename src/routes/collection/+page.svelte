@@ -5,6 +5,7 @@
 	import { get } from '$lib/api';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
+	import allPoke from '../../stores/pokemon';
 
 	const query = $page.url.searchParams.get('page');
 
@@ -34,9 +35,16 @@
 	let getPokemon = async (p) => {
 		loading = true;
 		pages = p;
-		let loadPokemon = await get(`/api/pokedex/page/${p}`);
-		pokemon = await fetchPokemons(loadPokemon);
-		loading = false;
+		if (!(p in $allPoke)) {
+			let loadPokemon = await get(`/api/pokedex/page/${p}`);
+			pokemon = await fetchPokemons(loadPokemon);
+			allPoke.newPokemon(p, pokemon);
+		} else {
+			pokemon = $allPoke[p];
+		}
+		setTimeout(() => {
+			loading = false;
+		}, 100);
 	};
 
 	let fetchPokemons = async (pokemons) => {
