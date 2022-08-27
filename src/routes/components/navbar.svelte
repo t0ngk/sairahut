@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import {goto} from '$app/navigation'
 	let y;
 
 	// const showY = () => {
@@ -10,16 +11,17 @@
 </script>
 
 <svelte:window bind:scrollY={y} />
-<div class={`${y > 30 ? "pt-4" : "pt-8"} bg-white w-full px-5 flex items-end mb-5 sticky top-0 left-0 z-20 transition-all duration-200 ease-out`}>
+<div class={`${y > 25 ? "pt-4" : "pt-8"} bg-white w-full px-5 flex items-end mb-5 sticky top-0 left-0 z-20 transition-all duration-200 ease-out`}>
 	<div
-		class={` ${y > 30 ? "pb-3" : "pb-6"} w-full flex justify-between items-center border-b-2 px-2 border-[#1B3176] text-[#111C43] text-lg`}
+		class={` ${y > 25 ? "pb-3" : "pb-6"} w-full flex justify-between items-center border-b-2 px-2 border-[#1B3176] text-[#111C43] text-lg`}
 	>
-		<a class="font-bold flex items-center justify-start rounded-xl transition-transform hover:translate-y-[-2px] hover:scale-105" href="/">
+		<div class="font-bold flex items-center justify-start rounded-xl transition-transform hover:translate-y-[-2px] hover:scale-105"
+		on:click={() => goto('/')}>
 			<img class="animate-spin mr-1 w-4 h-4" src="/icons/pokeball.png" alt="logo" />
 			SAIRAHUT
-        </a>
+        </div>
 		<div class="relative flex justify-start items-center">
-			<a class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" href="/profile">
+			<div class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" on:click={() => goto('/profile')}>
 				<svg
 					class="mx-auto {$page.url.pathname === '/profile'
 						? 'stroke-[#f20c32]'
@@ -37,8 +39,8 @@
 						stroke-linejoin="round"
 					/>
 				</svg>
-			</a>
-			<a class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" href="/collection">
+			</div>
+			<div class="w-8 transition-transform hover:translate-y-[-2px] hover:scale-105" on:click={() => goto('/collection')}>
 				<svg
 					class="mx-auto {$page.url.pathname === '/collection'
 						? 'stroke-[#f20c32]'
@@ -56,7 +58,7 @@
 						stroke-linejoin="round"
 					/>
 				</svg>
-			</a>
+			</div>
 			{#if $page.url.pathname === '/profile' || $page.url.pathname === '/collection'}
 				<div
 					class="slide w-1/2 absolute bottom-[-4px] transition-transform ease-in-out

@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from '$lib/api';
+	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 
 	const query = $page.url.searchParams.get('page');
@@ -45,9 +46,6 @@
 		for (let index = 0; index < pokemons.length; index++) {
 			const pokemon = pokemons[index]; // เข้าถึงข้อมูลโปเกม่อนแต่ละตัวที่ Fetch
 			let pokemonData = await get(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon_id}`); // ทำการดึงข้อมูลจาก ID นั้นๆ ต่อ
-			if (pokemonData.sprites.other.home.front_default == null) {
-				console.log(`Pokemon ID ${pokemon.pokemon_id}'s' img not found`);
-			}
 			result.push({
 				id: pokemon.pokemon_id,
 				image: pokemonData.sprites.other.home.front_default
@@ -98,6 +96,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT - Collection</title>
+</svelte:head>
+
 <div class="m-5">
 	<div class="text-3xl font-bold py-1 flex mb-2">
 		<span class="border-b-2 border-[#f20c32] mr-2">Pokedex collection</span>
@@ -110,9 +112,14 @@
 	/>
 
 	{#if !loading}
-		<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5">
-			{#each pokemon as pokemonInfo}
+		<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 overflow-hidden">
+			{#each pokemon as pokemonInfo, index}
 				<div
+					in:fly={{
+						y: '100',
+						delay: 100 * index,
+						opacity: 0,
+					}}
 					on:click={() => navigate(pokemonInfo.id)}
 					class={`poke-navigators poke-navigator-${pokemonInfo.id} cursor-pointer select-none w-full aspect-square border-2 border-[#B0CAF4] bg-[#F3F7FA] rounded-2xl flex justify-center items-center relative`}
 				>

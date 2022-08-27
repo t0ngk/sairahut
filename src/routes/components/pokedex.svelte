@@ -3,6 +3,18 @@
 	import { onMount } from 'svelte';
 	let showHint = false;
 	export let data;
+	import { circOut } from 'svelte/easing'
+	import { tweened } from 'svelte/motion';
+
+	const progress = tweened(0, {
+		delay: 1000,
+		duration: 2250,
+		easing: circOut
+	});
+
+	$: {
+		progress.set((data.hp.remain / data.hp.max));
+	}
 
 	onMount(() => {
 		const tl = gsap.timeline({});
@@ -33,8 +45,8 @@
 				'#current-hp',
 				{
 					width: 0,
-					duration: 1.5,
-					ease: 'steps(10)'
+					duration: 1,
+					ease: 'steps(1000)'
 				},
 				'<'
 			);
@@ -49,6 +61,7 @@
 		});
 	});
 </script>
+
 
 <div class="m-5">
 	<div class="text-3xl font-bold py-1 flex mb-2">
@@ -77,11 +90,12 @@
 		<div class="my-3">
 			<div class="stats ">{data.hp.remain}/{data.hp.max}</div>
 			<div id="max-hp" class="stats w-full bg-[#bebfc2] h-2 rounded-sm relative overflow-hidden">
-				<div
+				<!-- <div
 					id="current-hp"
 					class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] h-full"
 					style="width: {(data.hp.remain / data.hp.max) * 100}%"
-				/>
+				/> -->
+				<progress value={$progress} class="bg-gradient-to-r from-[#4FAB40] to-[#318F22] w-full absolute top-0" ></progress>
 			</div>
 		</div>
 		<div class="stats  flex justify-between items-center">
