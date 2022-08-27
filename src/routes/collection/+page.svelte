@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { get } from '$lib/api';
 
-	let page = 1;
+	let pages = 1;
 	let pokemon = [];
 	let loading = true;
 
@@ -19,14 +19,14 @@
 
 	onMount(async () => {
 		loading = true;
-		let loadPokemon = await get(`/api/pokedex/page/${page}`);
+		let loadPokemon = await get(`/api/pokedex/page/${pages}`);
 		pokemon = pokemon.concat(await fetchPokemons(loadPokemon));
 		loading = false
 	});
 
 	let getPokemon = async (p) => {
 		loading = true;
-		page = p;
+		pages = p;
 		let loadPokemon = await get(`/api/pokedex/page/${p}`);
 		pokemon = await fetchPokemons(loadPokemon);
 		loading = false;
@@ -132,9 +132,9 @@
 	<div class="text-center mt-3 flex justify-center items-center gap-1">
 		<button
 			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
-			{page <= 1 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
-			on:click={() => getPokemon(page - 1)}
-			disabled={page <= 1}
+			{pages <= 1 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
+			on:click={() => getPokemon(pages - 1)}
+			disabled={pages <= 1}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -151,21 +151,21 @@
 		{#each Array(paginationPage) as _, i}
 			<button
 				class="w-9 h-9 border-1 rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#ea8d40f3] transition-transform
-				{(page > 3 && page < 20 ? i + page - 2 : page >= 20 ? i + 18 : i + 1) === page
+				{(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) === pages
 					? 'bg-[#a8a8a881] border-[#cb66147e]'
 					: 'bg-[#ea8d40] border-[#CB6714]'}"
 				on:click={() =>
-					getPokemon(page > 3 && page < 20 ? i + page - 2 : page >= 20 ? i + 18 : i + 1)}
-				disabled={(page > 3 && page < 20 ? i + page - 2 : page >= 20 ? i + 18 : i + 1) === page}
+					getPokemon(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1)}
+				disabled={(pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1) === pages}
 			>
-				{page > 3 && page < 20 ? i + page - 2 : page >= 20 ? i + 18 : i + 1}
+				{pages > 3 && pages < 20 ? i + pages - 2 : pages >= 20 ? i + 18 : i + 1}
 			</button>
 		{/each}
 		<button
 			class="w-9 h-9 bg-[#e4781f] border-1 border-[#CB6714] rounded-md text-white flex justify-center items-center hover:translate-y-[-2px] hover:bg-[#e4781fde] transition-transform
-			{page >= 22 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
-			on:click={() => getPokemon(page + 1)}
-			disabled={page >= allPages}
+			{pages >= 22 ? 'bg-[#e4781f8a] border-[#cb661486]' : 'bg-[#ea8d40] border-[#CB6714]'}"
+			on:click={() => getPokemon(pages + 1)}
+			disabled={pages >= allPages}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
