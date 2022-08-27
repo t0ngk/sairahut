@@ -69,7 +69,7 @@
 		<img class="w-9" src="/images/pokedex.png" alt="pokedex" />
 	</div>
 	<div class="text-md text-[#616573]">
-		Wild pikachu appeared! <br />
+		Wild {data.name} appeared! <br />
 		นี่คือโปเกม่อนที่ต้องตามหา
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
