@@ -44,4 +44,4 @@
 	<title>SAIRAHUT - {pokemon.name}</title>
 </svelte:head>
 
-<Pokedex data={pokemon} />
+<Pokedex data={pokemon} noti={false} />

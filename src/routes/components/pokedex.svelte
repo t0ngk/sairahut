@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	let showHint = false;
 	export let data;
+	export let noti;
 	import { circOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
 	import notiHint from '../../stores/notiHint';
@@ -88,7 +89,7 @@
 			<span>
 				<svg
 					on:click={() => {
-						console.log("Redirect to : " + "https://pokemon.gameinfo.io/th/pokemon/" + data.name)
+						console.log('Redirect to : ' + 'https://pokemon.gameinfo.io/th/pokemon/' + data.name);
 					}}
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -132,7 +133,7 @@
 		</div>
 	</div>
 	<div class="stats  bg-[#ECF3F9] rounded-md p-2">
-		{#if notiHint.newHint($notiHint, data.hints).length > 0 && !showHint}
+		{#if noti && notiHint.newHint($notiHint, data.hints).length > 0 && !showHint}
 			<div class="absolute right-[3px] top-[3px]">
 				<span class="flex h-3 w-3">
 					<span
@@ -148,7 +149,7 @@
 			class="select-none cursor-pointer w-full h-9 px-2 mb-2 bg-white hover:bg-slate-50 transition-colors text-[#5592F5] border-2 border-[#5592F5] rounded-md flex justify-between items-center"
 			on:click={() => {
 				showHint = !showHint;
-				notiHint.reWrite(data.hints);
+				if (noti) notiHint.reWrite(data.hints);
 			}}
 		>
 			<span>คำใบ้</span>

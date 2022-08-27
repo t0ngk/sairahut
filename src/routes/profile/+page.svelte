@@ -65,7 +65,7 @@
 	<title>SAIRAHUT - Profile</title>
 </svelte:head>
 
-<Pokedex data={pokemon} />
+<Pokedex data={pokemon} noti={true} />
 <button
 	class=" m-4 bg-red-600 rounded-sm text-white "
 	on:click={() => {
