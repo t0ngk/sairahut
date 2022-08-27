@@ -69,7 +69,7 @@
 		<img class="w-9" src="/images/pokedex.png" alt="pokedex" />
 	</div>
 	<div class="text-md text-[#616573]">
-		Wild pikachu appeared! <br />
+		Wild {data.name} appeared! <br />
 		นี่คือโปเกม่อนที่ต้องตามหา
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
@@ -83,7 +83,28 @@
 	<div
 		class="stats text-2xl font-bold flex justify-between items-center border-b-2 boder-[#869EAF] pb-2"
 	>
-		<span class="text-[#101C43]">{data.name}</span>
+		<div>
+			<span class="text-[#101C43] inline">{data.name}</span>
+			<span>
+				<svg
+					on:click={() => {
+						console.log("Redirect to : " + "https://pokemon.gameinfo.io/th/pokemon/" + data.name)
+					}}
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-5 h-5 inline-block mb-2 text-blue-600"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+					/>
+				</svg>
+			</span>
+		</div>
 		<span class="text-[#616573]">Lv.{data.lvl}</span>
 	</div>
 	<div class="text-[#616573] mb-7">
