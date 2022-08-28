@@ -12,14 +12,10 @@
 
 <svelte:window bind:scrollY={y} />
 <div
-	class={`${
-		y > 25 ? 'pt-4' : 'pt-8'
-	} bg-white w-full px-5 flex items-end mb-5 sticky top-0 left-0 z-20 transition-all duration-200 ease-out`}
+	class={` ${y > 25 ? "mt-6" : "mt-4"} bg-white w-full px-5 flex items-end mb-5 sticky top-0 left-0 z-20 transition-all duration-200 ease-out`}
 >
 	<div
-		class={` ${
-			y > 25 ? 'pb-3' : 'pb-6'
-		} w-full flex justify-between items-center border-b-2 px-2 border-[#1B3176] text-[#111C43] text-lg`}
+		class={`py-4 w-full flex justify-between items-center border-b-2 px-2 border-[#1B3176] text-[#111C43] text-lg`}
 	>
 		<div
 			class="font-bold flex items-center justify-start rounded-xl transition-transform hover:translate-y-[-2px] hover:scale-105 cursor-pointer"

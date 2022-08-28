@@ -6,7 +6,7 @@
 	import { page } from '$app/stores';
 </script>
 
-{#if $page.url.pathname !== '/admin'}
+{#if $page.url.pathname.slice(0,6) !== '/admin'}
 	<SnackBar />
 	<div class="mx-auto max-w-[824px]">
 		<Navbar />
