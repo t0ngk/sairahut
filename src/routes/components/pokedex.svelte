@@ -174,15 +174,23 @@
 		{#if showHint}
 			{#each data.hints as hint, i}
 				<div
-					class="px-2 bg-white rounded-md h-12 flex items-center transition-opacity hintBox
+					class="p-2 bg-white rounded-md h-auto relative flex items-start transition-opacity hintBox gap-2
                     {i + 1 === data.hints.length ? '' : 'my-2'}"
+					style="min-height: 48px;"
 				>
 					<div
-						class="w-5 h-5 rounded-full bg-[#E4EBF0] flex justify-center items-center p-1 text-xs mr-2"
+						class="my-[5.5px] w-5 h-5 rounded-full bg-[#E4EBF0] flex justify-center items-center p-1 text-xs"
 					>
 						{i + 1}
 					</div>
-					{hint}
+					<div
+						class="my-[4px] flex justify-start items-center relative"
+						style="min-height: 20px; width: calc(100% - 20px - 16px)"
+					>
+						<div class="w-full break-words">
+							{hint}
+						</div>
+					</div>
 				</div>
 			{/each}
 		{/if}
