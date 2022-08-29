@@ -5,7 +5,7 @@ const pokedexSchema = new schema({
   pokemon_id: Number,
   pokemon_name: String,
   pokemon_url: String,
-  hint: Array,
+  hints: Array,
 });
 
 const pokedexModel = mongoose.model("pokemon", pokedexSchema);

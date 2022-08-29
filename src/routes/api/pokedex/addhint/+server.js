@@ -22,3 +22,32 @@ export const GET = async () => {
     }
 
 }
+
+export const PUT = async ({ request }) => {
+
+    const { hintNumber } = await request.json()
+
+    if (hintNumber == 0) {
+        try {
+            await pokedexModel.updateMany({}, { $set: { hints: [] } })
+            return new Response(JSON.stringify({ status: "success" }))
+        } catch (err) {
+            throw new Error({ status: "error" })
+        }
+    } else {
+        try {
+            if(hintNumber > 6) throw new Error({status: "error"});
+            seniorHint.forEach((senior, i) => {
+                pokedexModel.update({ pokemon_id: senior.pokemon_id }, { $push: { hints: senior[`hint_${hintNumber}`] } }).exec((err, data) => {
+                    if (err) {
+                        console.log("error on :", i, err)
+                        throw new Error(err)
+                    }
+                })
+            })
+            return new Response(JSON.stringify({ status: "success" }))
+        } catch (err) {
+            return new Response(JSON.stringify({ status: "error" }))
+        }
+    }
+}
