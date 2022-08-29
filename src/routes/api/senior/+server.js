@@ -18,12 +18,3 @@ export async function POST({ request, locals }) {
 
   return new Response(JSON.stringify(await newSenior.save()));
 }
-
-// Get all seniors profile
-export const GET = async () => {
-  const res = {
-    message: "Hello from server!"
-  }
-
-  return new Response(JSON.stringify(res));
-}

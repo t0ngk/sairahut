@@ -21,7 +21,7 @@
 			return;
 		}
 		const { user } = await get('/api/auth/profile', token);
-		if (user.std_id.startsWith('65')) {
+		if (String(user.std_id).startsWith('65')) {
 			goto('/');
 		}
 		if (user == undefined) { return }

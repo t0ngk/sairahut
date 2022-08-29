@@ -13,7 +13,7 @@ export async function POST({ params, request, locals }){
 	}
 	token = token.split(' ')[1];
 	const { user } = Jwt.decode(token, 'sairahut_super_secret');
-	if (user.std_id.startsWith('65')) {
+	if (String(user.std_id).startsWith('65')) {
     throw error(400, 'Missing Permission');
   }
   const pokemon = await pokedexModel.findOne({pokemon_id: pokemon_id});

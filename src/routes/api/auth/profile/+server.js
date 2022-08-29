@@ -10,12 +10,21 @@ export async function GET({ request, locals }) {
 		throw error(400, 'Unauthorized');
 	}
 	token = token.split(' ')[1];
-	const { user } = Jwt.decode(token, 'sairahut_super_secret');
+
 	let payload = null
-	if (user.std_id.startsWith('64')) {
-		payload = await seniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});
-	} else {
-		payload = await juniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});
-	};
-	return new Response(JSON.stringify({ user:payload }));
+
+	try{ 
+		const { user } = Jwt.decode(token, 'sairahut_super_secret');	
+		
+		if (String(user.std_id).startsWith('64')) {
+			payload = await seniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});
+		} else {
+			payload = await juniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});
+		};
+		return new Response(JSON.stringify({ user:payload }));
+	}catch(err){
+		// ชิบหายละ แม่งไม่มี token หรือไรสักอย่าง
+		console.log(err)
+		throw error(400, 'Unauthorized or something went wrong!');
+	}
 }

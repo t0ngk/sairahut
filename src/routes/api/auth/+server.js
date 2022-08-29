@@ -10,21 +10,23 @@ export async function POST({ request, locals }) {
   if (!(email.endsWith('@kmitl.ac.th'))) {
     throw error(400, "Please use @kmitl.ac.th");
   };
-  const std_id = email.split('@')[0];
-  let user = null;
-  if (std_id.startsWith('64')) {
-    let payload = await seniorModel.findOne({ std_id });
+  const std_id = email.split('@')[0]; // ดึงค่าเฉพาะรหัสนักศึกษามา
+  let user = null; // Initialize user variable
+
+  if (String(std_id).startsWith('64')) { // พี่
+    let payload = await seniorModel.findOne({ std_id:Number(std_id) });
     user = {
       std_id:payload.std_id,
       std_name:payload.std_name
     }
-  } else {
-    let payload = await juniorModel.findOne({ std_id });
+  } else { // น้อง
+    let payload = await juniorModel.findOne({ std_id:Number(std_id) });
     user = {
       std_id:payload.std_id,
       std_name:payload.std_name
     }
   };
+
   if (!user) {
     throw error(400, "User not found");
   }
