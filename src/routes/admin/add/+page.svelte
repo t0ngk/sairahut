@@ -3,6 +3,7 @@
 	import { get, put } from '$lib/api';
 	import { onMount } from 'svelte';
 	import { afterNavigate, goto } from '$app/navigation';
+	import notification from '././../../../stores/notification';
 	let getHintData = [];
 
 	afterNavigate(() => {
@@ -34,21 +35,33 @@
 		getHintData = await get('/api/pokedex/addhint');
 	});
 
-	const display = () => {
-		console.log(getHintData);
-	};
-
 	const addHint = async (hintNumber) => {
-		const updatedStatus = await put(
+		await put(
 			'/api/pokedex/addhint',
 			{ hintNumber },
 			window.localStorage.getItem('token')
 		);
 
-		console.log(updatedStatus);
+		if (hintNumber != 0) {
+			notification.pushNoti('success', 'ระบบ', `เพิ่มคำใบ้ที่ ${hintNumber} ให้ทุกคนแล้ว`, 2000);
+		} else {
+			notification.pushNoti('success', 'ระบบ', `ล้างคำใบ้ที่มีทั้งหมดแล้ว`, 2000);
+		}
 	};
 
-	$: getHintData, display();
+	const showFace = async (is_show_face) => {
+		await put(
+			'/api/senior/setface',
+			{ is_show_face },
+			window.localStorage.getItem('token')
+		);
+
+		if (is_show_face) {
+			notification.pushNoti('success', 'ระบบ', `เฉลยหน้าพี่ๆแล้ว โชคดีทุกคน`, 2000);
+		} else {
+			notification.pushNoti('success', 'ระบบ', `รีบปิดให้ละ 😅`, 2000);
+		}
+	};
 </script>
 
 <div class="px-5">
@@ -85,17 +98,23 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="mt-4 bg-slate-100 p-4">
-		<button on:click={() => addHint(0)} class="px-4 py-2 bg-blue-400 text-white rounded"
-			>เคีลยร์คำใบ้ทั้งหมด</button
-		>
-		<button on:click={() => addHint(1)} class="px-4 py-2 bg-blue-400 text-white rounded"
-			>เพิ่ม hint ชุดที่ 1</button
-		>
-		<button on:click={() => addHint(2)} class="px-4 py-2 bg-blue-400 text-white rounded">เพิ่ม hint ชุดที่ 2</button>
-		<button on:click={() => addHint(3)} class="px-4 py-2 bg-blue-400 text-white rounded">เพิ่ม hint ชุดที่ 3</button>
-		<button on:click={() => addHint(4)} class="px-4 py-2 bg-blue-400 text-white rounded">เพิ่ม hint ชุดที่ 4</button>
-		<button on:click={() => addHint(5)} class="px-4 py-2 bg-blue-400 text-white rounded">เพิ่ม hint ชุดที่ 5</button>
-		<button on:click={() => addHint(6)} class="px-4 py-2 bg-blue-400 text-white rounded">เพิ่ม hint ชุดที่ 6</button>
+	<div class="mt-4 bg-slate-100 p-4 flex justify-between">
+		<div>
+			<button on:click={() => addHint(0)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded"
+				>เคีลยร์คำใบ้ทั้งหมด</button
+			>
+			<button on:click={() => addHint(1)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded"
+				>เพิ่ม hint ชุดที่ 1</button
+			>
+			<button on:click={() => addHint(2)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded">เพิ่ม hint ชุดที่ 2</button>
+			<button on:click={() => addHint(3)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded">เพิ่ม hint ชุดที่ 3</button>
+			<button on:click={() => addHint(4)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded">เพิ่ม hint ชุดที่ 4</button>
+			<button on:click={() => addHint(5)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded">เพิ่ม hint ชุดที่ 5</button>
+			<button on:click={() => addHint(6)} class="px-4 py-2 transition-all bg-blue-400 hover:bg-blue-500 active:bg-blue-600 active:scale-95 text-white rounded">เพิ่ม hint ชุดที่ 6</button>
+		</div>
+		<div class="flex gap-2">
+			<button on:click={() => showFace(true)} class="px-4 py-2 transition-all bg-red-400 hover:bg-red-500 active:bg-red-600 active:scale-95 text-white rounded">เฉลยหน้าพี่รหัส</button>
+			<button on:click={() => showFace(false)} class="px-4 py-2 transition-all bg-red-400 hover:bg-red-500 active:bg-red-600 active:scale-95 text-white rounded">กดผิด ปิดคืนที</button>
+		</div>
 	</div>
 </div>

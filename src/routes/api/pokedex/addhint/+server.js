@@ -38,7 +38,7 @@ export const PUT = async ({ request }) => {
         try {
             if(hintNumber > 6) throw new Error({status: "error"});
             seniorHint.forEach((senior, i) => {
-                pokedexModel.update({ pokemon_id: senior.pokemon_id }, { $push: { hints: senior[`hint_${hintNumber}`] } }).exec((err, data) => {
+                pokedexModel.updateOne({ pokemon_id: senior.pokemon_id }, { $push: { hints: senior[`hint_${hintNumber}`] } }).exec((err, data) => {
                     if (err) {
                         console.log("error on :", i, err)
                         throw new Error(err)

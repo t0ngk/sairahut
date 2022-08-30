@@ -7,7 +7,6 @@ let oldHints = writable(browser ? JSON.parse(localStorage.getItem('hints')) : []
 oldHints.reWrite = (newData) => {
 	oldHints.update(() => [...newData]);
 	localStorage.setItem('hints', JSON.stringify(newData));
-	console.log(newData);
 };
 
 oldHints.newHint = (data = [], checkData = []) => {
