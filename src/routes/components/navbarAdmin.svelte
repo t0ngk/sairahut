@@ -16,7 +16,7 @@
 		<div>
 			<ul class="flex gap-4">
 				<li class="font-semibold text-gray-800 cursor-pointer" on:click={() => goto('/admin')}>Assign poke</li>
-				<li class="font-semibold text-gray-800 cursor-pointer" on:click={() => goto('/admin/add')}>Add hint</li>
+				<li class="font-semibold text-gray-800 cursor-pointer" on:click={() => goto('/admin/hints')}>Add hint</li>
 			</ul>
 		</div>
 	</div>
