@@ -20,5 +20,5 @@ export async function PUT({ request, locals }) {
     throw error(404, "Not Found");
   }
 
-  return new Response("success");
+  return new Response(JSON.stringify(senior));
 }
