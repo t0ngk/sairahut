@@ -3,7 +3,7 @@
 	import { get } from '$lib/api';
 	import { onMount } from 'svelte';
 	import Pokedex from '../components/pokedex.svelte';
-	import { capitalize, covertToPokemonName } from '$lib/utils'
+	import { capitalize, covertToPokemonName } from '$lib/utils';
 	afterNavigate(() => {
 		if (!window.localStorage.getItem('token')) {
 			goto('/login');
@@ -35,7 +35,6 @@
 		}
 		if (user.pokemon_id == null) {
 			pokemon.name = 'Pokemon Egg';
-			pokemon.image = '/images/pokemon_egg.png';
 			pokemon.element = 'Unknow';
 			pokemon.lvl = 0;
 			pokemon.hp.remain = 1;
@@ -48,10 +47,15 @@
 		const userPokemon = await get(`/api/pokedex/${user.pokemon_id}`);
 		const pokemonInfo = await get(`https://pokeapi.co/api/v2/pokemon/${userPokemon.pokemon_id}`);
 		pokemon.name = covertToPokemonName(userPokemon.pokemon_name);
-		pokemon.image = pokemonInfo.sprites.other.home.front_default;
+		if (user.is_show_face == true) {
+			pokemon.image = '/images/profile/64070011.png';
+		} else {
+			pokemon.image = pokemonInfo.sprites.other.home.front_default;
+		}
 		pokemon.lvl = Math.floor(pokemonInfo.base_experience / 10);
 		pokemon.hp.max = Math.floor(pokemonInfo.stats[0].base_stat * pokemon.lvl);
 		pokemon.hints = userPokemon.hints;
+		pokemon.is_show_face = user.is_show_face;
 		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
 		pokemon.element = capitalize(pokemonInfo.types[0].type.name);
 		pokemon.atk =
@@ -66,19 +70,3 @@
 </svelte:head>
 
 <Pokedex data={pokemon} noti={true} />
-<button
-	class=" m-4 bg-red-600 rounded-sm text-white "
-	on:click={() => {
-		window.localStorage.removeItem('token');
-		goto('/');
-	}}
->
-	Logout (Dev Button)
-</button>
-
-<button
-	on:click={() => {
-		pokemon.hints.push(new Date().toLocaleString());
-		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
-	}}>Add Hints</button
->

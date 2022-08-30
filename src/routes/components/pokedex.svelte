@@ -75,7 +75,7 @@
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
 		<div class="w-[222px] h-[222px] rounded-full bg-[#F5F5F5] flex justify-center items-center">
-			<img id="poke-image" style="w-full" src={data.image} alt="pokemon" />
+			<img id="poke-image" class="{data.is_show_face ? 'rounded-full' : ''}" style="w-full" src={data.image} alt="pokemon" />
 		</div>
 		<div class="stats absolute bottom-0 right-0 text-[#616573]">{data.element}</div>
 	</div>
