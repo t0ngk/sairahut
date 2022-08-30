@@ -6,7 +6,7 @@ const seniorSchema = new schema({
   std_name: String,
   pokemon_id: Number,
   pokemon_name: String,
-  img_url:String,
+  wanted: Boolean,
   is_show_face: Boolean
 });
 
