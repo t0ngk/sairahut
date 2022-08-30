@@ -2,11 +2,13 @@
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	let showHint = false;
+	let showDialog = false;
 	export let data;
 	export let noti;
 	import { circOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
 	import notiHint from '../../stores/notiHint';
+	import FullImages from './FullImages.svelte';
 	const progress = tweened(0, {
 		delay: 1000,
 		duration: 2250,
@@ -74,9 +76,19 @@
 		นี่คือโปเกม่อนที่ต้องตามหา
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
-		<div class="w-[222px] h-[222px] rounded-full bg-[#F5F5F5] flex justify-center items-center">
-			<img id="poke-image" class="{data.is_show_face ? 'rounded-full' : ''}" style="w-full" src={data.image} alt="pokemon" />
+		<div
+			class="w-[222px] h-[222px] rounded-full bg-[#F5F5F5] flex justify-center items-center cursor-pointer"
+			on:click={() => (showDialog = !showDialog)}
+		>
+			<img
+				id="poke-image"
+				class={data.is_show_face ? 'rounded-full' : ''}
+				style="w-full"
+				src={data.image}
+				alt="pokemon"
+			/>
 		</div>
+		<FullImages src={data.image} dialog={showDialog} />
 		<div class="stats absolute bottom-0 right-0 text-[#616573]">{data.element}</div>
 	</div>
 </div>
