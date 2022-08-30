@@ -2,12 +2,14 @@
 	import { gsap } from 'gsap';
 	import { onMount } from 'svelte';
 	let showHint = false;
+	let showDialog = false;
 	export let data;
 	export let noti;
 	import { circOut } from 'svelte/easing';
-import { element } from 'svelte/internal';
+	import { element } from 'svelte/internal';
 	import { tweened } from 'svelte/motion';
 	import notiHint from '../../stores/notiHint';
+	import FullImages from './FullImages.svelte';
 	const progress = tweened(0, {
 		delay: 1000,
 		duration: 2250,
@@ -65,25 +67,25 @@ import { element } from 'svelte/internal';
 	});
 
 	const bgColor = {
-		"normal": "bg-[#9099A1]",
-		"fighting":"bg-[#CE4069]",
-		"flying":"bg-[#92AADE]",
-		"poison":"bg-[#AB6AC8]",
-		"ground":"bg-[#D97746]",
-		"rock":"bg-[#C7B78B]",
-		"bug":"bg-[#90C12C]",
-		"ghost":"bg-[#5269AC]",
-		"steel":"bg-[#5A8EA1]",
-		"fire":"bg-[#FF9C54]",
-		"water":"bg-[#4D90D5]",
-		"grass":"bg-[#63BB5B]",
-		"electric":"bg-[#F3D23B]",
-		"psychic":"bg-[#F97176]",
-		"ice":"bg-[#74CEC0]",
-		"dragon":"bg-[#096DC4]",
-		"dark":"bg-[#5A5366]",
-		"fairy":"bg-[#EC8FE6]"
-	}
+		normal: 'bg-[#9099A1]',
+		fighting: 'bg-[#CE4069]',
+		flying: 'bg-[#92AADE]',
+		poison: 'bg-[#AB6AC8]',
+		ground: 'bg-[#D97746]',
+		rock: 'bg-[#C7B78B]',
+		bug: 'bg-[#90C12C]',
+		ghost: 'bg-[#5269AC]',
+		steel: 'bg-[#5A8EA1]',
+		fire: 'bg-[#FF9C54]',
+		water: 'bg-[#4D90D5]',
+		grass: 'bg-[#63BB5B]',
+		electric: 'bg-[#F3D23B]',
+		psychic: 'bg-[#F97176]',
+		ice: 'bg-[#74CEC0]',
+		dragon: 'bg-[#096DC4]',
+		dark: 'bg-[#5A5366]',
+		fairy: 'bg-[#EC8FE6]'
+	};
 </script>
 
 <div class="m-5">
@@ -96,9 +98,21 @@ import { element } from 'svelte/internal';
 		นี่คือโปเกม่อนที่ต้องตามหา
 	</div>
 	<div class="h-[375px] flex justify-center items-center relative">
-		<div class={`${bgColor[data.element.toLowerCase()] || "bg-neutral-100"} w-[222px] h-[222px] rounded-full flex justify-center items-center`}>
-			<img id="poke-image" class="{data.is_show_face ? 'rounded-full' : ''}" style="w-full" src={data.image} alt="pokemon" />
+		<div
+			class={`${
+				bgColor[data.element.toLowerCase()] || 'bg-neutral-100'
+			} w-[222px] h-[222px] rounded-full flex justify-center items-center cursor-pointer`}
+			on:click={() => (showDialog = !showDialog)}
+		>
+			<img
+				id="poke-image"
+				class={data.is_show_face ? 'rounded-full' : ''}
+				style="w-full"
+				src={data.image}
+				alt="pokemon"
+			/>
 		</div>
+		<FullImages src={data.image} dialog={showDialog} />
 		<div class="stats absolute bottom-0 right-0 text-[#616573]">{data.element}</div>
 	</div>
 </div>
