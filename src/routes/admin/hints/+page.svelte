@@ -64,6 +64,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>SAIRAHUT.BACK - Hints</title>
+</svelte:head>
+
 <div class="px-5">
 	<h1 class="mb-2">เพิ่มคำใบ้ทั้ง 6</h1>
 	<div class="w-full overflow-x-auto h-[60vh]">
