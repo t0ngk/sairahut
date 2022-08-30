@@ -46,18 +46,20 @@
 		}
 		const userPokemon = await get(`/api/pokedex/${user.pokemon_id}`);
 		const pokemonInfo = await get(`https://pokeapi.co/api/v2/pokemon/${userPokemon.pokemon_id}`);
-		pokemon.name = covertToPokemonName(userPokemon.pokemon_name);
 		if (user.is_show_face == true) {
-			pokemon.image = '/images/profile/64070011.png';
+			pokemon.image = `/images/profile/${user.std_id}.png`;
+			pokemon.name = user.std_name
+			pokemon.element = 'Human';
 		} else {
 			pokemon.image = pokemonInfo.sprites.other.home.front_default;
+			pokemon.name = covertToPokemonName(userPokemon.pokemon_name);
+			pokemon.element = capitalize(pokemonInfo.types[0].type.name);
 		}
 		pokemon.lvl = Math.floor(pokemonInfo.base_experience / 10);
 		pokemon.hp.max = Math.floor(pokemonInfo.stats[0].base_stat * pokemon.lvl);
 		pokemon.hints = userPokemon.hints;
 		pokemon.is_show_face = user.is_show_face;
 		pokemon.hp.remain = pokemon.hp.max - (pokemon.hp.max / 8) * pokemon.hints.length;
-		pokemon.element = capitalize(pokemonInfo.types[0].type.name);
 		pokemon.atk =
 			pokemonInfo.stats[1].base_stat + pokemonInfo.stats[1].base_stat * 0.5 * pokemon.lvl;
 		pokemon.def =
