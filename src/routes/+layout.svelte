@@ -6,14 +6,16 @@
 	import { page } from '$app/stores';
 </script>
 
-{#if $page.url.pathname.slice(0,6) !== '/admin'}
+{#if $page.url.pathname.slice(0, 6) !== '/admin' && $page.url.pathname.slice(0, 4) !== '/all'}
 	<SnackBar />
 	<div class="mx-auto max-w-[824px]">
 		<Navbar />
 		<slot />
 	</div>
-{:else}
+{:else if $page.url.pathname.slice(0, 6) === '/admin'}
 	<SnackBar />
 	<NavbarAdmin />
+	<slot />
+{:else}
 	<slot />
 {/if}
