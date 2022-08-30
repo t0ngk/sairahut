@@ -133,7 +133,7 @@
 		</div>
 	</div>
 	<div class="stats  bg-[#ECF3F9] rounded-md p-2">
-		{#if noti && notiHint.newHint($notiHint, data.hints).length > 0 && !showHint}
+		{#if noti && notiHint.newHint($notiHint || [], data.hints).length > 0 && !showHint}
 			<div class="absolute right-[3px] top-[3px]">
 				<span class="flex h-3 w-3">
 					<span
@@ -146,7 +146,7 @@
 			</div>
 		{/if}
 		<div
-			class="select-none cursor-pointer w-full h-9 px-2 mb-2 bg-white hover:bg-slate-50 transition-colors text-[#5592F5] border-2 border-[#5592F5] rounded-md flex justify-between items-center"
+			class="select-none cursor-pointer w-full h-9 px-2 bg-white hover:bg-slate-50 transition-colors text-[#5592F5] border-2 border-[#5592F5] rounded-md flex justify-between items-center"
 			on:click={() => {
 				showHint = !showHint;
 				if (noti) notiHint.reWrite(data.hints);
@@ -174,8 +174,7 @@
 		{#if showHint}
 			{#each data.hints as hint, i}
 				<div
-					class="p-2 bg-white rounded-md h-auto relative flex items-start transition-opacity hintBox gap-2
-                    {i + 1 === data.hints.length ? '' : 'my-2'}"
+					class="mt-2 p-2 bg-white rounded-md h-auto relative flex items-start transition-opacity hintBox gap-2"
 					style="min-height: 48px;"
 				>
 					<div
@@ -193,6 +192,14 @@
 					</div>
 				</div>
 			{/each}
+			{#if data.hints.length === 0}
+				<div
+					class="mt-2 p-2 bg-white rounded-md h-auto relative flex items-center transition-opacity hintBox justify-center gap-2"
+					style="min-height: 48px;"
+				>
+					ยังไม่มีคำใบ้ รอก่อนนะะ
+				</div>
+			{/if}
 		{/if}
 	</div>
 </div>
