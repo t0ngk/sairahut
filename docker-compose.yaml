@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  web-sairahut:
+    image: sairahut:lastest
+    container_name: web-sairahut
+    restart: always
+    ports:
+      - 80:3000
+    networks:
+      - kitty
+networks:
+  kitty:
