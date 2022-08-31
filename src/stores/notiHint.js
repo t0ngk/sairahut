@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import notification from './notification';
 
 // const stored = JSON.parse(localStorage.getItem('hints'));
