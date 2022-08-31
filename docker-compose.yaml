@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   web-sairahut:
-    image: sairahut:lastest
+    image: sairahut-web:latest
     container_name: web-sairahut
     restart: always
     ports:
