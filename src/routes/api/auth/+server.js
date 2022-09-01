@@ -13,7 +13,7 @@ export async function POST({ request, locals }) {
   const std_id = email.split('@')[0]; // ดึงค่าเฉพาะรหัสนักศึกษามา
   let user = null; // Initialize user variable
 
-  if (String(std_id).startsWith('64')) { // พี่
+  if (String(std_id).startsWith('64') || String(std_id).startsWith('63')) { // พี่
     let payload = await seniorModel.findOne({ std_id:Number(std_id) });
     user = {
       std_id:payload.std_id,

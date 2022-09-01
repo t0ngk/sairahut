@@ -14,9 +14,8 @@ export async function GET({ request, locals }) {
 	let payload = null
 
 	try{ 
-		const { user } = Jwt.decode(token, 'sairahut_super_secret');	
-		
-		if (String(user.std_id).startsWith('64')) {
+		const { user } = Jwt.decode(token, 'sairahut_super_secret');
+		if (String(user.std_id).startsWith('64') || String(user.std_id).startsWith('63')) { // พี่
 			payload = await seniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});
 		} else {
 			payload = await juniorModel.findOne({ std_id: user.std_id }, {_id: 0, __v: 0});

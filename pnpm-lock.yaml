@@ -2,25 +2,25 @@ lockfileVersion: 5.4
 
 specifiers:
   '@beyonk/svelte-social-auth': ^3.0.0
-  '@playwright/test': ^1.25.0
+  '@playwright/test': ^1.25.1
   '@sveltejs/adapter-auto': next
   '@sveltejs/adapter-node': 1.0.0-next.88
   '@sveltejs/kit': next
-  autoprefixer: ^10.4.7
-  dotenv: ^16.0.1
-  eslint: ^8.16.0
-  eslint-config-prettier: ^8.3.0
+  autoprefixer: ^10.4.8
+  dotenv: ^16.0.2
+  eslint: ^8.23.0
+  eslint-config-prettier: ^8.5.0
   eslint-plugin-svelte3: ^4.0.0
   gsap: ^3.11.0
   jsonwebtoken: ^8.5.1
-  mongoose: ^6.5.2
-  postcss: ^8.4.14
+  mongoose: ^6.5.4
+  postcss: ^8.4.16
   postcss-load-config: ^4.0.1
-  prettier: ^2.6.2
+  prettier: ^2.7.1
   prettier-plugin-svelte: ^2.7.0
-  svelte: ^3.44.0
+  svelte: ^3.49.0
   svelte-preprocess: ^4.10.7
-  tailwindcss: ^3.1.5
+  tailwindcss: ^3.1.8
   vite: ^3.1.0-beta.1
 
 dependencies:
