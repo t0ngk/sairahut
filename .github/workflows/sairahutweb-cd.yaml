@@ -19,4 +19,5 @@ jobs:
           git pull origin main
           sudo docker build -t sairahut-web:latest .
           sudo docker-compose up -d
+          sudo docker system prune -a -f
           sudo docker ps -a
