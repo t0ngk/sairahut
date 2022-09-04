@@ -1,5 +1,8 @@
 name: Deploy Sairahut
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   
