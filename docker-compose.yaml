@@ -1,8 +1,8 @@
 version: '3.9'
 services:
   web-sairahut:
-    image: sairahut-web:latest
-    container_name: web-sairahut
+    image: sairahut-web-dev:latest
+    container_name: web-sairahut-dev
     restart: always
     ports:
       - 80:3000
