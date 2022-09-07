@@ -9,7 +9,7 @@ export async function GET({ request, locals }) {
 	if (!token || token == null) {
 		throw error(400, 'Unauthorized');
 	}
-	token = token.split(' ')[1];
+	token = token.split(' ')[1]; // ดึงค่าหลัง Bearer
 
 	let payload = null
 
