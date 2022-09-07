@@ -22,5 +22,5 @@ jobs:
           git pull origin next
           sudo docker build -t sairahut-web-dev:latest .
           sudo docker-compose up -d
-          sudo docker system prune -a -f
+          #sudo docker system prune -a -f
           sudo docker ps -a
