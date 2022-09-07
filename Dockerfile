@@ -5,8 +5,11 @@ WORKDIR /app
 RUN apk add --no-cache curl
 RUN curl -sL https://unpkg.com/@pnpm/self-installer | node
 
-COPY . .
+COPY package.json package.json
+COPY pnpm-lock.yaml pnpm-lock.yaml
+
 RUN pnpm install --force
+COPY . .
 RUN pnpm run build
 
 #Prodution_build
