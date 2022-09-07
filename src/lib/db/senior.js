@@ -9,7 +9,7 @@ const seniorSchema = new schema({
   wanted: Boolean,
   has_junior: Number,
   junior_found: Number,
-  is_show_face: Boolean
+  is_show_face: Boolean,
 });
 
 const seniorModel = mongoose.model("senior", seniorSchema);
