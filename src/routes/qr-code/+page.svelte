@@ -25,6 +25,7 @@
 				setTimeout(() => {
 					qrScanner.start();
 				}, 2000);
+				alert(res.isFoundSenior);
 			},
 			{ highlightScanRegion: true, onDecodeError() {} }
 		);
