@@ -17,5 +17,6 @@
 	<NavbarAdmin />
 	<slot />
 {:else}
+	<Navbar />
 	<slot />
 {/if}
