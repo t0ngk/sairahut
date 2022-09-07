@@ -32,7 +32,11 @@ devDependencies:
   '@playwright/test': 1.25.1
   '@sveltejs/adapter-auto': 1.0.0-next.71
   '@sveltejs/adapter-node': 1.0.0-next.88
+<<<<<<< HEAD
   '@sveltejs/kit': 1.0.0-next.464_qevq5tvhizyxp44gfhkn6m3ljq
+=======
+  '@sveltejs/kit': 1.0.0-next.468_qevq5tvhizyxp44gfhkn6m3ljq
+>>>>>>> parent of dc880fd... :sparkles: : QR-Code Scanner to Catch Pokemon!!
   autoprefixer: 10.4.8_postcss@8.4.16
   eslint: 8.23.0
   eslint-config-prettier: 8.5.0_eslint@8.23.0
@@ -219,8 +223,13 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
   /@sveltejs/kit/1.0.0-next.464_qevq5tvhizyxp44gfhkn6m3ljq:
     resolution: {integrity: sha512-QV0IE8ShRC5ndP0fQN4/3bg8PMkjnhvLo0C4gULJ14LFPw5fgDbwuVM4uXmM+nfzT8hTkf9F27J3uZSoJmHaeg==}
+=======
+  /@sveltejs/kit/1.0.0-next.468_qevq5tvhizyxp44gfhkn6m3ljq:
+    resolution: {integrity: sha512-IH1lQfSbY4efDtV8/gtVTv1cBbp8IPTeW25BN0e/ImT6xeThiODWMKHlr+zxLDHbI3jQ70uTJMZ+pFWpk5ZOtg==}
+>>>>>>> parent of dc880fd... :sparkles: : QR-Code Scanner to Catch Pokemon!!
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
