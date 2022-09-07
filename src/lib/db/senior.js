@@ -7,6 +7,8 @@ const seniorSchema = new schema({
   pokemon_id: Number,
   pokemon_name: String,
   wanted: Boolean,
+  has_junior: Number,
+  junior_found: Number,
   is_show_face: Boolean
 });
 
