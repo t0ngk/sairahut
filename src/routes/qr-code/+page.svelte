@@ -1,41 +1,45 @@
 <script>
-	let videoElement = '';
-	import QrScanner from 'qr-scanner';
-	import { post } from '$lib/api';
-	import { onMount } from 'svelte';
+  
+  import QRCode from 'qrcode';
+  import { onMount } from 'svelte';
+  import { invalidate, goto } from '$app/navigation';
+  import { browser } from '$app/environment'
+  import {get} from '$lib/api'
 
-	onMount(async () => {
-		const qrScanner = new QrScanner(
-			videoElement,
-			async (result) => {
-				qrScanner.stop();
-				const res = await post(
-					'/api/pokedex/catch',
-					{ qr_code: result },
-					window.localStorage.getItem('token')
-				);
-				if (res.message == 'You have already found your senior') {
-					alert('You have already found your senior');
-					return;
-				} else if (res.message == 'Quota is full') {
-					alert('Quota is full');
-					return;
-				};
-				console.log(res.isFoundSenior);
-				setTimeout(() => {
-					qrScanner.start();
-				}, 2000);
-				alert(res.isFoundSenior);
-			},
-			{ highlightScanRegion: true, onDecodeError() {} }
-		);
+  if (browser) {    
+    invalidate(() => {
+      if (!window.localStorage.getItem('token')) {
+        goto('/login');
+        return;
+      }
+    });
+  };
 
-		qrScanner.start();
-	});
+  let qrCodeElement = "";
+	const generateQR = async (text) => {
+    try {
+      return await QRCode.toCanvas(qrCodeElement, text, {
+        width: screen.width * 0.50,
+        margin: 0,
+        color: {
+          dark: '#111C43',
+          light: '#00000000',
+        },
+      });
+		} catch (err) {
+      console.error(err);
+		}
+	};
+  
+  onMount(async () => {
+    const qrCodeUrl = await get('/api/auth/profile/qrcode', window.localStorage.getItem('token'));
+    if (qrCodeUrl.status == 400) {
+      window.location.href = '/';
+      return;
+    }
+    await generateQR(qrCodeUrl);
+  });
 </script>
 
-<div class="mx-auto">
-	<video class="rounded" bind:this={videoElement} src="">
-		<track kind="captions" />
-	</video>
-</div>
+
+<canvas class="mx-auto" bind:this="{qrCodeElement}" ></canvas>

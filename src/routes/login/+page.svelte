@@ -5,7 +5,7 @@
 	import notification from '../../stores/notification';
 	afterNavigate(() => {
 		if (window.localStorage.getItem('token')) {
-			goto('/');
+			goto('/profile');
 		}
 	});
 
@@ -24,7 +24,7 @@
 			return;
 		}
 		window.localStorage.setItem('token', response.token);
-		goto('/profile');
+		window.location.reload();
 	};
 </script>
 
