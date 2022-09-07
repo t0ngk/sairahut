@@ -34,6 +34,7 @@
 		"gsap": "^3.11.1",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^6.5.4",
-		"qr-scanner": "^1.4.1"
+		"qr-scanner": "^1.4.1",
+		"qrcode": "^1.5.1"
 	}
 }

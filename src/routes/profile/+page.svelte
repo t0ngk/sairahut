@@ -1,15 +1,18 @@
 <script>
-	import { afterNavigate, goto } from '$app/navigation';
+	import { afterNavigate, goto, invalidate } from '$app/navigation';
+	import { browser } from '$app/environment';
 	import { get } from '$lib/api';
 	import { onMount } from 'svelte';
 	import Pokedex from '../components/pokedex.svelte';
 	import { capitalize, covertToPokemonName } from '$lib/utils';
-	afterNavigate(() => {
-		if (!window.localStorage.getItem('token')) {
-			goto('/login');
-			return;
-		}
-	});
+	if (browser) {
+		invalidate(() => {
+			if (!window.localStorage.getItem('token')) {
+				goto('/login');
+				return;
+			}
+		});
+	};
 
 	let pokemon = {
 		name: 'ditto',
