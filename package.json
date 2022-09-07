@@ -33,6 +33,7 @@
 		"dotenv": "^16.0.2",
 		"gsap": "^3.11.0",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^6.5.4"
+		"mongoose": "^6.5.4",
+		"qr-scanner": "^1.4.1"
 	}
 }
