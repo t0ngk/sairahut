@@ -1,6 +1,6 @@
 <script>
 	import { afterNavigate, goto } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { get } from '$lib/api';
 	import { page } from '$app/stores';
 	import WantedCard from '../components/WantedCard.svelte';
@@ -10,6 +10,7 @@
 		line2: [],
 		line3: []
 	};
+	let intervalFetch = null;
 	afterNavigate(() => {
 		if (!window.localStorage.getItem('token')) {
 			goto('/login');
@@ -19,7 +20,7 @@
 	onMount(async () => {
 		const token = await window.localStorage.getItem('token');
 		fetchPokemon();
-		setInterval(async () => {
+		intervalFetch = setInterval(async () => {
 			await fetchPokemon();
 		}, 8000);
 
@@ -38,6 +39,9 @@
 			allSenior.line2 = getAllSenior.slice(perLine, perLine * 2);
 			allSenior.line3 = getAllSenior.slice(perLine * 2, perLine * 3);
 		}
+	});
+	onDestroy(() => {
+		clearInterval(intervalFetch);
 	});
 </script>
 
