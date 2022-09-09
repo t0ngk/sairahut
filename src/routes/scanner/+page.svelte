@@ -4,11 +4,13 @@
 	let isScanned = false;
 	let catchResult = null;
 	let errorMessage = 'Loading...';
+	let fetchedProfile;
 
 	let videoElement = '';
 	import QrScanner from 'qr-scanner';
 	import { post } from '$lib/api';
 	import { onMount } from 'svelte';
+	import { profile } from '../../stores/profile';
 
 	const setScanner = () => {
 		const qrScanner = new QrScanner(
@@ -32,7 +34,8 @@
 				}
 
 				/* --- Expected case (true/false only) --- */
-				catchResult = res.isFoundSenior;
+				console.log(res)
+				catchResult = res;
 			},
 			{ highlightScanRegion: true, onDecodeError() {} }
 		);
@@ -57,6 +60,10 @@
 			});
 
 		showResultTl.from('#achievement', {
+			opacity: 0,
+			y: 20,
+			ease: "power2.easeOut"
+		}).from('#win-pokemon', {
 			opacity: 0,
 			y: 20,
 			ease: "power2.easeOut"
@@ -94,10 +101,18 @@
 		});
 	};
 
+	profile.subscribe(value => {
+		fetchedProfile = value;
+	});
+
 	onMount(() => {
 		// initialAnimation(); // เปิดใช้สำหรับ development เท่านั้น
 		setScanner();
 	});
+
+	// $: fetchedProfile, (()=> {
+	// 	console.log(fetchedProfile);
+	// })()
 
 	$: isScanned,
 		(() => {
@@ -137,11 +152,11 @@
 										กลับไปหน้าโปรไฟล์
 									</button>
 								</div>
-							{:else if catchResult == true}
+							{:else if catchResult.isFoundSenior == true}
 								<div>
 									<p class=" text-center text-2xl font-bold">จับสำเร็จ!</p>
 									<p class="text-xl text-center text-gray-400">ยินดีด้วยคุณทำภารกิจสำเร็จ</p>
-									<div class="flex justify-center my-4">
+									<div class="flex flex-col items-center my-4">
 										<div id="achievement" class="bg-gray-100 p-3 flex space-x-2 roudned-md">
 											<svg
 												class="bg-yellow-400 p-1 h-auto aspect-square box-content rounded"
@@ -164,6 +179,7 @@
 												<p class=" leading-4">Beginning of pokemon trainer.</p>
 											</div>
 										</div>
+										<img id="win-pokemon" src={catchResult.pokemon_url} alt={`${catchResult.pokemon_url}-img`} class="w-1/2"/>
 									</div>
 									<button
 										class="w-full px-4 py-2 bg-blue-500 rounded text-white shadow mt-12"
@@ -172,8 +188,8 @@
 										กลับไปหน้าโปรไฟล์
 									</button>
 								</div>
-							{:else if catchResult == false}
-								<p class=" text-center text-2xl font-bold">จับไม่สำเร็จ ลองหาใหม่นะ</p>
+							{:else if catchResult.isFoundSenior == false}
+								<p class=" text-center text-2xl font-bold">จับไม่สำเร็จ ลองจับใหม่นะ</p>
 								<button
 									class="w-full px-4 py-2 bg-blue-500 rounded text-white shadow mt-12"
 									on:click={() => {
@@ -192,5 +208,8 @@
 		<video class="rounded" bind:this={videoElement} src="">
 			<track kind="captions" />
 		</video>
+		<div class="p-4 text-center text-2xl font-medium text-gray-500">
+			<p>โควต้าจับโปเกม่อนเหลือ : {fetchedProfile ? fetchedProfile?.quota_left : "loading..."}</p>
+		</div>
 	{/if}
 </div>

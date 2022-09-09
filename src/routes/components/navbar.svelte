@@ -3,12 +3,8 @@
 	import { goto } from '$app/navigation';
 	import {get} from '$lib/api';
 	import { onMount } from 'svelte';
+	import { profile } from '../../stores/profile';
 	let y;
-
-	// const showY = () => {
-	// 	console.log(y)
-	// }
-
 
 	let isSenior = false;
 	onMount(async () => {
@@ -19,6 +15,9 @@
 		if (String(user.std_id).startsWith('64') || String(user.std_id).startsWith('63')) {
 			isSenior = true;
 		}
+
+		profile.update(_ => user)
+
 	});
 	// $: y , showY()
 </script>
