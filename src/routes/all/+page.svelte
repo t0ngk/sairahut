@@ -1,4 +1,5 @@
 <script>
+	import { afterNavigate, goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { get } from '$lib/api';
 	import { page } from '$app/stores';
@@ -9,13 +10,14 @@
 		line2: [],
 		line3: []
 	};
-	onMount(async () => {
-		const token = await window.localStorage.getItem('token');
-		if (!token) {
+	afterNavigate(() => {
+		if (!window.localStorage.getItem('token')) {
 			goto('/login');
 			return;
 		}
-
+	});
+	onMount(async () => {
+		const token = await window.localStorage.getItem('token');
 		fetchPokemon();
 		setInterval(async () => {
 			await fetchPokemon();
