@@ -13,7 +13,7 @@ jobs:
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.4
       with:
-        host: ${{ secrets.HOSTIP1_SAIRAHUT }} , ${{ secrets.HOSTIP2_SAIRAHUT }}
+        host: ${{ secrets.HOSTIP1_SAIRAHUT }},${{ secrets.HOSTIP2_SAIRAHUT }}
         username: ${{ secrets.HOST_USERNAME }}
         key: ${{ secrets.RUNNER_SAIRAHUTKEY }}
         port: ${{ secrets.HOST_PORT }}
