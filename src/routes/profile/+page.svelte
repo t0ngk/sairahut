@@ -52,7 +52,7 @@
 		let getFace = null;
 		getFace = await get(`/api/pokedex/${user.pokemon_id}/getface`);
 		if (getFace != null && getFace != "Not Now" ) {
-			pokemon.image = `/images/profile/${getFace.std_id}.png`;
+			pokemon.image = `/images/profile/${getFace.std_id}.jpg`;
 			pokemon.name = getFace.std_name
 			pokemon.element = 'Human';
 			pokemon.is_show_face = true;

@@ -13,7 +13,7 @@
 					: 'border-[#F20C32]'} bg-[#FDFDFD] relative"
 			>
 				<img
-					src="/images/profile/{data.std_id}.png"
+					src="/images/profile/{data.std_id}.jpg"
 					alt="senior"
 					onerror="if (this.src != 'error.jpg') this.src = '/icon-256x256.png';"
 					class="w-full rounded-full aspect-square object-cover overflow-hidden"
