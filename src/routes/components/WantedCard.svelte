@@ -15,19 +15,23 @@
 				<img
 					src="/images/profile/{data.std_id}.png"
 					alt="senior"
+					onerror="if (this.src != 'error.jpg') this.src = '/icon-256x256.png';"
 					class="w-full rounded-full aspect-square object-cover overflow-hidden"
 				/>
-				<div
-					class="w-1/2 absolute bottom-0 right-[-10%] border-[3px] {data.wanted
-						? 'border-[#E3E3E3]'
-						: 'border-[#F20C32]'} rounded-full p-[3px] bg-[#FDFDFD]"
-				>
-					<img
-						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${data.pokemon_id}.png`}
-						alt="senior"
-						class="w-full rounded-full border-[4px] border-[#5A8EA1] aspect-square object-cover"
-					/>
-				</div>
+				{#if data.is_show_face}
+					<div
+						class="w-1/2 absolute bottom-0 right-[-10%] border-[3px] {data.wanted
+							? 'border-[#E3E3E3]'
+							: 'border-[#F20C32]'} rounded-full p-[3px] bg-[#FDFDFD]"
+					>
+						<img
+							src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${data.pokemon_id}.png`}
+							alt="senior"
+							class="w-full rounded-full border-[4px] border-[#5A8EA1] aspect-square object-cover"
+							onerror="if (this.src != 'error.jpg') this.src = '/icons/poekeball.png';"
+						/>
+					</div>
+				{/if}
 			</div>
 			<div class="absolute top-0 right-0 m-2">
 				{#each Array(data.has_junior - data.junior_found) as _}

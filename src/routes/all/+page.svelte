@@ -15,13 +15,11 @@
 			goto('/login');
 			return;
 		}
-		let getAllSenior = await get(`/api/senior/`, token);
-		getAllSenior = getAllSenior.filter((senior) => senior.has_junior > 0);
 
-		const perLine = Math.ceil(getAllSenior.length / 3);
-		allSenior.line1 = getAllSenior.slice(0, perLine);
-		allSenior.line2 = getAllSenior.slice(perLine, perLine * 2);
-		allSenior.line3 = getAllSenior.slice(perLine * 2, perLine * 3);
+		fetchPokemon();
+		setInterval(async () => {
+			await fetchPokemon();
+		}, 8000);
 
 		const left = document.getElementsByClassName('toleft');
 		const right = document.getElementsByClassName('toright');
@@ -29,6 +27,15 @@
 		left[0].style.animationDuration = duration + 's';
 		right[0].style.animationDuration = duration + 's';
 		left[1].style.animationDuration = duration + 's';
+		async function fetchPokemon() {
+			let getAllSenior = await get(`/api/senior/`, token);
+			getAllSenior = getAllSenior.filter((senior) => senior.has_junior > 0);
+
+			const perLine = Math.ceil(getAllSenior.length / 3);
+			allSenior.line1 = getAllSenior.slice(0, perLine);
+			allSenior.line2 = getAllSenior.slice(perLine, perLine * 2);
+			allSenior.line3 = getAllSenior.slice(perLine * 2, perLine * 3);
+		}
 	});
 </script>
 
