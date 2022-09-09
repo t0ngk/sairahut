@@ -2,7 +2,7 @@ name: Deploy Sairahut
 on:
   push:
     branches:
-      - next
+      - main
 
 jobs:
   
@@ -19,8 +19,8 @@ jobs:
         port: ${{ secrets.HOST_PORT }}
         script: |
           cd sairahut
-          git pull origin next
-          sudo docker build -t sairahut-web-dev:latest .
+          git pull origin main
+          sudo docker build -t sairahut-web:latest .
           sudo docker-compose up -d
           sudo docker system prune -a -f
           sudo docker ps -a
