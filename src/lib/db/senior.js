@@ -7,7 +7,9 @@ const seniorSchema = new schema({
   pokemon_id: Number,
   pokemon_name: String,
   wanted: Boolean,
-  is_show_face: Boolean
+  has_junior: Number,
+  junior_found: Number,
+  is_show_face: Boolean,
 });
 
 const seniorModel = mongoose.model("senior", seniorSchema);

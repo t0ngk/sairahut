@@ -1,108 +1,79 @@
 <script>
-	import { onMount } from 'svelte';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { onMount, onDestroy } from 'svelte';
 	import { get } from '$lib/api';
+	import { page } from '$app/stores';
+	import WantedCard from '../components/WantedCard.svelte';
+	const duration = $page.url.searchParams.get('duration') || 200;
 	let allSenior = {
 		line1: [],
 		line2: [],
 		line3: []
 	};
-	onMount(async () => {
-		const token = await window.localStorage.getItem('token');
-		if (!token) {
+	let intervalFetch = null;
+	afterNavigate(() => {
+		if (!window.localStorage.getItem('token')) {
 			goto('/login');
 			return;
 		}
-		let getAllSenior = await get(`/api/senior/`, token);
-		allSenior.line1 = getAllSenior.slice(0, 85);
-		allSenior.line2 = getAllSenior.slice(85, 170);
-		allSenior.line3 = getAllSenior.slice(170, 255);
+	});
+	onMount(async () => {
+		const token = await window.localStorage.getItem('token');
+		fetchPokemon();
+		intervalFetch = setInterval(async () => {
+			await fetchPokemon();
+		}, 8000);
+
+		const left = document.getElementsByClassName('toleft');
+		const right = document.getElementsByClassName('toright');
+
+		left[0].style.animationDuration = duration + 's';
+		right[0].style.animationDuration = duration + 's';
+		left[1].style.animationDuration = duration + 's';
+		async function fetchPokemon() {
+			let getAllSenior = await get(`/api/senior/`, token);
+			getAllSenior = getAllSenior.filter((senior) => senior.has_junior > 0);
+
+			const perLine = Math.ceil(getAllSenior.length / 3);
+			allSenior.line1 = getAllSenior.slice(0, perLine);
+			allSenior.line2 = getAllSenior.slice(perLine, perLine * 2);
+			allSenior.line3 = getAllSenior.slice(perLine * 2, perLine * 3);
+		}
+	});
+	onDestroy(() => {
+		clearInterval(intervalFetch);
 	});
 </script>
 
-<div class="h-screen w-screen flex justify-start items-center overflow-hidden">
+<div
+	class="w-screen flex justify-start items-center overflow-hidden"
+	style="height: clac(100vh - 100px)"
+>
 	<div>
-		<div class="h-[33vh] w-fit relative p-2 flex justify-start items-center gap-2 toleft">
+		<div
+			class="w-fit relative p-2 flex justify-start items-center gap-2 toleft"
+			style="height:calc(33vh - 40px)"
+		>
 			{#each allSenior.line1 as data, i}
-				<div class="h-[100%] aspect-square relative">
-					<div class="w-full h-full rounded-xl relative overflow-hidden">
-						<img
-							class="w-full h-full absolute blur-sm"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: cover;"
-						/>
-						<img
-							class="w-full h-full absolute"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: contain;"
-						/>
-					</div>
-                    <!-- เอา || true ออก -->
-					{#if data.wanted || true}
-						<div
-							class="absolute rounded-xl w-full h-full bg-[#ffffffc0] top-0 flex justify-center items-center text-red-600 text-2xl"
-						>
-							แตก
-						</div>
-					{/if}
-				</div>
+				<WantedCard {data} />
 			{/each}
 		</div>
 
-		<div class="h-[33vh] w-fit relative p-2 flex justify-start items-center gap-2 toright">
+		<div
+			class="w-fit relative p-2 flex justify-start items-center gap-2 toright"
+			style="height:calc(33vh - 40px)"
+		>
 			{#each allSenior.line2 as data, i}
-				<div class="h-[100%] aspect-square relative">
-					<div class="w-full h-full rounded-xl relative overflow-hidden">
-						<img
-							class="w-full h-full absolute blur-sm"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: cover;"
-						/>
-						<img
-							class="w-full h-full absolute"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: contain;"
-						/>
-					</div>
-					{#if data.wanted}
-						<div
-							class="absolute rounded-xl w-full h-full bg-[#ffffffc0] top-0 flex justify-center items-center text-red-600 text-2xl"
-						>
-							แตก
-						</div>
-					{/if}
-				</div>
+				<WantedCard {data} />
 			{/each}
 		</div>
 
-		<div class="h-[33vh] w-fit relative p-2 flex justify-start items-center gap-2 toleft">
+		<div
+			class="w-fit relative p-2 flex justify-start items-center gap-2 toleft"
+			style="height:calc(33vh - 40px)"
+		>
 			{#each allSenior.line3 as data, i}
-				<div class="h-[100%] aspect-square relative">
-					<div class="w-full h-full rounded-xl relative overflow-hidden">
-						<img
-							class="w-full h-full absolute blur-sm"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: cover;"
-						/>
-						<img
-							class="w-full h-full absolute"
-							src="/images/profile/{data.std_id}.png"
-							alt=""
-							style="object-fit: contain;"
-						/>
-					</div>
-					{#if data.wanted}
-						<div
-							class="absolute rounded-xl w-full h-full bg-[#ffffffc0] top-0 flex justify-center items-center text-red-600 text-2xl"
-						>
-							แตก
-						</div>
-					{/if}
-				</div>
+				<WantedCard {data} />
 			{/each}
 		</div>
 	</div>
@@ -110,10 +81,10 @@
 
 <style>
 	.toleft {
-		animation: toleft 100s linear infinite alternate;
+		animation: toleft 200s linear infinite alternate;
 	}
 	.toright {
-		animation: toright 100s linear infinite alternate;
+		animation: toright 200s linear infinite alternate;
 	}
 	@keyframes toleft {
 		0% {

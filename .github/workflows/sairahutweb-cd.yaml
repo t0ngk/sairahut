@@ -2,7 +2,7 @@ name: Deploy Sairahut
 on:
   push:
     branches:
-      - main
+      - next
 
 jobs:
   
@@ -13,14 +13,14 @@ jobs:
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.4
       with:
-        host: ${{ secrets.HOSTIP1_SAIRAHUT }},${{ secrets.HOSTIP2_SAIRAHUT }}
+        host: ${{ secrets.HOSTIP3_SAIRAHUT }}
         username: ${{ secrets.HOST_USERNAME }}
         key: ${{ secrets.RUNNER_SAIRAHUTKEY }}
         port: ${{ secrets.HOST_PORT }}
         script: |
           cd sairahut
-          git pull origin main
-          sudo docker build -t sairahut-web:latest .
+          git pull origin next
+          sudo docker build -t sairahut-web-dev:latest .
           sudo docker-compose up -d
-          sudo docker system prune -a -f
+          #sudo docker system prune -a -f
           sudo docker ps -a
